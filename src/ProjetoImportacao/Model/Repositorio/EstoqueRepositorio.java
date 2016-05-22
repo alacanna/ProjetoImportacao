@@ -93,6 +93,35 @@ public class EstoqueRepositorio implements IRepositorio<Estoque>{
         } 
        return estoque;
     }
+    
+    
+    public Estoque CarregarEstoquePorProduto(int codigoProduto) {
+       String sql = "SELECT * FROM ESTOQUE where IdProduto=" + codigoProduto; 
+       Estoque estoque = new Estoque();
+       
+       ResultSet rs = pers.ExecutaLista(sql);
+       try{
+           if(rs != null)
+           {
+            estoque = new Estoque();
+            estoque.setIdEstoque(rs.getInt("IdEstoque"));
+            estoque.setQuantidade(rs.getInt("Quantidade"));
+            //Seleciona o produto
+            ProdutoRepositorio produtoRepositorio = new ProdutoRepositorio();
+            estoque.setProduto(produtoRepositorio.Carregar(rs.getInt("IdProduto"))); 
+           }
+       }catch (SQLException ex) {
+            Logger.getLogger(EstoqueRepositorio.class.getName()).log(Level.SEVERE, null, ex);
+       }finally{
+           try {
+               rs.close();
+           } catch (SQLException ex) {
+               Logger.getLogger(EstoqueRepositorio.class.getName()).log(Level.SEVERE, null, ex);
+           }
+        } 
+       return estoque;
+    }
+
 
     @Override
     public void Remover(Estoque item) {
@@ -102,13 +131,13 @@ public class EstoqueRepositorio implements IRepositorio<Estoque>{
     
     private void Incluir(Estoque item)
     {
-        String sql = "INSERT INTO Estoque(IdProduto,Quantidade) VALUES ('" + item.getProduto().getIdProduto() +"','" + item.getQuantidade() +"' )";
+        String sql = "INSERT INTO ESTOQUE(IdProduto,Quantidade) VALUES ('" + item.getProduto().getIdProduto() +"','" + item.getQuantidade() +"' )";
         pers.ExecutaComando(sql);
     }
     
     private void Alterar(Estoque item)
     {
-       String sql = "UPDATE PRODUTO SET IdProduto ='" + item.getProduto().getIdProduto() +"',Quantidade='" + item.getQuantidade() + "' where IdEstoque=" + item.getIdEstoque(); 
+       String sql = "UPDATE ESTOQUE SET IdProduto ='" + item.getProduto().getIdProduto() +"',Quantidade='" + item.getQuantidade() + "' where IdEstoque=" + item.getIdEstoque(); 
        pers.ExecutaComando(sql);
     }
 }

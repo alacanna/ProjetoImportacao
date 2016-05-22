@@ -57,7 +57,7 @@
                   <Component id="btnLimpar" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnSalvar" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="50" max="32767" attributes="0"/>
+              <EmptySpace pref="49" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -90,7 +90,7 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
+              <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="lblTipoMov" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -102,13 +102,12 @@
                       <Component id="cmbPais" alignment="0" min="-2" pref="198" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace pref="105" max="32767" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="lblProduto" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                          <Component id="cmbProduto" alignment="1" max="32767" attributes="0"/>
-                          <Component id="lblQte" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtQte" alignment="1" pref="198" max="32767" attributes="0"/>
-                      </Group>
+                      <Component id="cmbProduto" alignment="1" max="32767" attributes="0"/>
+                      <Component id="lblQte" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtQte" alignment="1" pref="198" max="32767" attributes="0"/>
+                      <Component id="txtEstoqueAtual" alignment="0" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace pref="16" max="32767" attributes="0"/>
               </Group>
@@ -138,7 +137,9 @@
                           <Component id="cmbPais" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace pref="100" max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="txtEstoqueAtual" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace pref="79" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -217,6 +218,11 @@
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
+        </Component>
+        <Component class="javax.swing.JLabel" name="txtEstoqueAtual">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Estoque atual :"/>
+          </Properties>
         </Component>
       </SubComponents>
     </Container>

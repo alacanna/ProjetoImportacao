@@ -9,6 +9,8 @@ import ProjetoImportacao.Model.Estoque;
 import ProjetoImportacao.Model.Produto;
 import ProjetoImportacao.Model.Repositorio.EstoqueRepositorio;
 import ProjetoImportacao.Model.Repositorio.ProdutoRepositorio;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 
 /**
@@ -22,8 +24,8 @@ public class FrmRegistrarMovimentacao extends javax.swing.JInternalFrame {
      */
     public FrmRegistrarMovimentacao() {
         initComponents();
+        preencheView();
         Util.carregarProduto(cmbProduto, new ProdutoRepositorio());
-
     }
 
     /**
@@ -45,6 +47,7 @@ public class FrmRegistrarMovimentacao extends javax.swing.JInternalFrame {
         cmbProduto = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
         cmbPais = new javax.swing.JComboBox<>();
+        txtEstoqueAtual = new javax.swing.JLabel();
         btnLimpar = new javax.swing.JButton();
         btnSalvar = new javax.swing.JButton();
 
@@ -89,6 +92,8 @@ public class FrmRegistrarMovimentacao extends javax.swing.JInternalFrame {
             }
         });
 
+        txtEstoqueAtual.setText("Estoque atual :");
+
         javax.swing.GroupLayout PProdutoLayout = new javax.swing.GroupLayout(PProduto);
         PProduto.setLayout(PProdutoLayout);
         PProdutoLayout.setHorizontalGroup(
@@ -103,12 +108,12 @@ public class FrmRegistrarMovimentacao extends javax.swing.JInternalFrame {
                         .addComponent(jLabel1))
                     .addComponent(cmbPais, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 105, Short.MAX_VALUE)
-                .addGroup(PProdutoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(PProdutoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(lblProduto)
-                    .addGroup(PProdutoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(cmbProduto, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lblQte, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(txtQte, javax.swing.GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE)))
+                    .addComponent(cmbProduto, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblQte)
+                    .addComponent(txtQte, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE)
+                    .addComponent(txtEstoqueAtual, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(16, Short.MAX_VALUE))
         );
         PProdutoLayout.setVerticalGroup(
@@ -132,7 +137,9 @@ public class FrmRegistrarMovimentacao extends javax.swing.JInternalFrame {
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cmbPais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(100, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtEstoqueAtual)
+                .addContainerGap(79, Short.MAX_VALUE))
         );
 
         btnLimpar.setText("Limpar");
@@ -178,7 +185,7 @@ public class FrmRegistrarMovimentacao extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnLimpar)
                     .addComponent(btnSalvar))
-                .addContainerGap(50, Short.MAX_VALUE))
+                .addContainerGap(49, Short.MAX_VALUE))
         );
 
         pack();
@@ -201,16 +208,22 @@ public class FrmRegistrarMovimentacao extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_cmbTipoMovActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        // TODO add your handling code here:
-        Estoque estoque = new Estoque();
-        estoque.setQuantidade(Integer.parseInt(txtQte.getText()));
-        estoque.setProduto((Produto)cmbProduto.getSelectedItem());
-        
-        EstoqueRepositorio rep = new EstoqueRepositorio();
-        rep.Salvar(estoque);
-        Limpar();
-        
-        JOptionPane.showMessageDialog(null, "Movimentação realizada com sucesso!");
+
+        int quantidade = 0;
+        try {
+            quantidade = Integer.parseInt(txtQte.getText());
+            // TODO add your handling code here:
+            Estoque estoque = new Estoque();
+            estoque.setQuantidade(Integer.parseInt(txtQte.getText()));
+            estoque.setProduto((Produto) cmbProduto.getSelectedItem());
+
+            EstoqueRepositorio rep = new EstoqueRepositorio();
+            rep.Salvar(estoque);
+            Limpar();
+            JOptionPane.showMessageDialog(null, "Movimentação realizada com sucesso!");
+        } catch (NumberFormatException exception) {
+            JOptionPane.showMessageDialog(null, "Por favor digite uma quantidade válida!");
+        }
 
     }//GEN-LAST:event_btnSalvarActionPerformed
 
@@ -227,6 +240,7 @@ public class FrmRegistrarMovimentacao extends javax.swing.JInternalFrame {
     private javax.swing.JLabel lblQte;
     private javax.swing.JLabel lblTipoMov;
     private javax.swing.JLabel lblTituloPagina;
+    private javax.swing.JLabel txtEstoqueAtual;
     private javax.swing.JTextField txtQte;
     // End of variables declaration//GEN-END:variables
 
@@ -236,4 +250,24 @@ public class FrmRegistrarMovimentacao extends javax.swing.JInternalFrame {
         cmbTipoMov.setSelectedIndex(0);
         cmbPais.setSelectedIndex(0);
     }
+
+    private void preencheView() {
+        cmbProduto.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("IdProduto "+ ((Produto)cmbProduto.getSelectedItem()).getIdProduto());
+                System.out.println("Estoque "+ new EstoqueRepositorio().Listar(null).toString());
+
+                
+                EstoqueRepositorio repEstoque = new EstoqueRepositorio();
+                Estoque estoque = repEstoque.CarregarEstoquePorProduto(((Produto) cmbProduto.getSelectedItem()).getIdProduto());
+
+                if (estoque != null) {
+                    txtEstoqueAtual.setText("Estoque atual: " + String.valueOf(estoque.getQuantidade()));
+                }
+
+            }
+        });
+    }
+
 }
