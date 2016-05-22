@@ -12,6 +12,7 @@ import ProjetoImportacao.Model.Repositorio.EstoqueRepositorio;
 import ProjetoImportacao.Model.Repositorio.MovimentoEstoqueRepositorio;
 import ProjetoImportacao.Model.Repositorio.ProdutoRepositorio;
 import java.awt.event.ItemEvent;
+
 import java.util.Date;
 import javax.swing.JOptionPane;
 
@@ -233,7 +234,6 @@ public class FrmRegistrarMovimentacao extends javax.swing.JInternalFrame {
             }
             
             MovimentoEstoqueRepositorio repMov = new MovimentoEstoqueRepositorio();
-            
             
             MovimentoEstoque movimento = new MovimentoEstoque();
             movimento.setData(Util.sdf.format(new Date()));

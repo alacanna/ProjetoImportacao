@@ -26,8 +26,9 @@ public class FrmRegistrarEnvio extends javax.swing.JInternalFrame {
         Util.carregarProduto(cmbProduto, new ProdutoRepositorio());
         GerarCodigoBarras();
         txtData.setEnabled(false);
-       
+        
         txtData.setText(Util.sdf.format(new Date()));
+
         
     }
 

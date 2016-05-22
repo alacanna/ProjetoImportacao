@@ -23,7 +23,8 @@ public class EstoqueRepositorio implements IRepositorio<Estoque> {
 
     @Override
     public void Salvar(Estoque item) {
-        Estoque estoque = CarregarEstoquePorProduto(item.getProduto().getIdProduto());
+        Estoque estoque = CarregarEstoquePorProduto(item.getProduto().getIdProduto(), item.getPais());
+        
         if (estoque == null) {
             Incluir(item);
         } else {
@@ -92,8 +93,8 @@ public class EstoqueRepositorio implements IRepositorio<Estoque> {
         return estoque;
     }
 
-    public Estoque CarregarEstoquePorProduto(int codigoProduto) {
-        String sql = "SELECT * FROM ESTOQUE where IdProduto=" + codigoProduto;
+    public Estoque CarregarEstoquePorProduto(int codigoProduto, String pais) {
+        String sql = "SELECT * FROM ESTOQUE where IdProduto=" + codigoProduto + " and Pais = '" + pais + "'";
         Estoque estoque = null;
 
         ResultSet rs = pers.ExecutaLista(sql);
