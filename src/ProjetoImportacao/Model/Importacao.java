@@ -73,5 +73,13 @@ public class Importacao {
         this.status = status;
     }
 
+    private int codigoBarras;
+
+    public int getCodigoBarras() {
+        return codigoBarras;
+    }
     
+    public void setCodigoBarras(int codigoBarras) {
+        this.codigoBarras = codigoBarras;
+    }
 }

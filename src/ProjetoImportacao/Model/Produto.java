@@ -60,16 +60,6 @@ public class Produto {
         this.uniMedida = uniMedida;
     }
     
-        private String codigoBarras;
-
-    public String getCodigoBarras() {
-        return codigoBarras;
-    }
-    
-    public void setCodigoBarras(String codigoBarras) {
-        this.codigoBarras = codigoBarras;
-    }
-    
     @Override
     public String toString()
     {
