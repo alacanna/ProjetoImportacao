@@ -106,6 +106,7 @@ public class EstoqueRepositorio implements IRepositorio<Estoque> {
                     estoque = new Estoque();
                     estoque.setIdEstoque(rs.getInt("IdEstoque"));
                     estoque.setQuantidade(rs.getInt("Quantidade"));
+                    estoque.setPais(rs.getString("Pais"));
                     //Seleciona o produto
                     ProdutoRepositorio produtoRepositorio = new ProdutoRepositorio();
                     estoque.setProduto(produtoRepositorio.Carregar(rs.getInt("IdProduto")));
