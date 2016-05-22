@@ -5,6 +5,11 @@
  */
 package ProjetoImportacao;
 
+import ProjetoImportacao.Model.Importacao;
+import ProjetoImportacao.Model.Repositorio.ImportacaoRepositorio;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author VanessaCristine
@@ -16,6 +21,7 @@ public class FrmRastreamento extends javax.swing.JInternalFrame {
      */
     public FrmRastreamento() {
         initComponents();
+        CarregarGrid();
     }
 
     /**
@@ -50,13 +56,10 @@ public class FrmRastreamento extends javax.swing.JInternalFrame {
 
         Relatorio.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+
             },
             new String [] {
-                "Cód.Barras", "Produto", "Quantidade", "Data Envio", "Data Recebimento", "Status"
+                "Cód.Barras", "Produto", "Quantidade", "Data Envio", "Dt Receb.", "Status"
             }
         ));
         CHL.setViewportView(Relatorio);
@@ -69,22 +72,19 @@ public class FrmRastreamento extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(216, 216, 216)
-                        .addComponent(btnAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(CHL, javax.swing.GroupLayout.PREFERRED_SIZE, 521, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(lblTituloPagina, javax.swing.GroupLayout.PREFERRED_SIZE, 521, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(btnAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 215, Short.MAX_VALUE))
+                    .addComponent(CHL, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblTituloPagina, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(lblTituloPagina, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(CHL, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addComponent(CHL, javax.swing.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnAtualizar)
                 .addContainerGap())
         );
@@ -94,9 +94,32 @@ public class FrmRastreamento extends javax.swing.JInternalFrame {
 
     private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
         // TODO add your handling code here:
+        CarregarGrid();
     }//GEN-LAST:event_btnAtualizarActionPerformed
 
+ public void CarregarGrid()
+    {
+     ImportacaoRepositorio rep = new ImportacaoRepositorio();
+     List<Importacao> movimentos = rep.Listar(null);
+        
+        DefaultTableModel userTableModel = new DefaultTableModel( new Object[]{ "Cód.Barras", "Produto", "Quantidade", "Data Envio", "Dt Receb.", "Status" }, 0 );
+        
+        for (Importacao m : movimentos) {
+            Object[] o = new Object[6];
+            o[0] = m.getCodigoBarras();
+            o[1] = m.getProduto().getNome();
+            o[2] = m.getQuantidade();
+            o[3] = m.getDataEnvio();
+            o[4] = m.getDataRecebimento();
+            o[5] = m.getStatus();
+            
+            userTableModel.addRow(o);
+          }
+        Relatorio.setModel(userTableModel);
+       
+    }
 
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane CHL;
     private javax.swing.JTable Relatorio;
