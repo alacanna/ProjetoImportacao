@@ -5,6 +5,7 @@
  */
 package ProjetoImportacao.Model.Repositorio;
 
+import ProjetoImportacao.Model.Estoque;
 import ProjetoImportacao.Model.Importacao;
 import ProjetoImportacao.Model.MovimentoEstoque;
 import ProjetoImportacao.Util;
@@ -55,7 +56,12 @@ public class ImportacaoRepositorio implements IRepositorio<Importacao> {
         movEstoque.setEstoque(repEstoque.CarregarEstoquePorProduto(item.getProduto().getIdProduto()));
         repMov.Salvar(movEstoque);
     }
-
+    public void Alterar(Importacao item) {
+        String sql = "UPDATE Importacao SET Status= '" + item.getStatus() +"' where CodBarras=" + item.getCodigoBarras();
+        System.out.println("Query "+ sql);
+        pers.ExecutaComando(sql);
+    }    
+    
     @Override
     public List<Importacao> Listar(String[] params) {
 

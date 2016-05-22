@@ -24,7 +24,6 @@ public class EstoqueRepositorio implements IRepositorio<Estoque> {
     @Override
     public void Salvar(Estoque item) {
         Estoque estoque = CarregarEstoquePorProduto(item.getProduto().getIdProduto());
-        
         if (estoque == null) {
             Incluir(item);
         } else {
