@@ -21,7 +21,7 @@ public class FrmRegistrarEnvio extends javax.swing.JInternalFrame {
      */
     public FrmRegistrarEnvio() {
         initComponents();
-        CarregarProduto();
+        Util.carregarProduto(cmbProduto, new ProdutoRepositorio());
         GerarCodigoBarras();
     }
 
@@ -42,16 +42,6 @@ public class FrmRegistrarEnvio extends javax.swing.JInternalFrame {
 
         txtCodBarras.setText(armazenaChaves);
         txtCodBarras.setEnabled(false);
-    }
-
-    public void CarregarProduto() {
-        ProdutoRepositorio rep = new ProdutoRepositorio();
-
-        List<Produto> produtos = rep.Listar(null);
-
-        produtos.stream().forEach((p) -> {
-            cmbProduto.addItem(p);
-        });
     }
 
     /**
