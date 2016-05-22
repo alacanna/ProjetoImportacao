@@ -22,13 +22,14 @@ public class EstoqueRepositorio implements IRepositorio<Estoque> {
     private Persistencia pers = new Persistencia();
 
     @Override
-    public void Salvar(Estoque estoque) {
+    public void Salvar(Estoque item) {
         Estoque estoque = CarregarEstoquePorProduto(item.getProduto().getIdProduto());
+        
         if (estoque == null) {
-            Incluir(estoque);
+            Incluir(item);
         } else {
             item.setIdEstoque(estoque.getIdEstoque());
-            Alterar(estoque);
+            Alterar(item);
         }
     }
 
