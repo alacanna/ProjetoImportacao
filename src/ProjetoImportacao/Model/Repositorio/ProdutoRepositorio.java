@@ -38,7 +38,7 @@ public class ProdutoRepositorio implements IRepositorio<Produto>{
         
         ResultSet rs = pers.ExecutaLista("SELECT * FROM PRODUTO");
         
-        List<Produto> produtos = new ArrayList<Produto>();
+        List<Produto> produtos = new ArrayList<>();
         Produto produto;
         
         try {
@@ -46,7 +46,8 @@ public class ProdutoRepositorio implements IRepositorio<Produto>{
                 
                 produto = new Produto();
                 produto.setCategoria(rs.getString("Categoria"));
-                produto.setCodigoBarras(rs.getString("CodigoBarras"));
+                produto.setIdProduto(rs.getInt("IdProduto"));
+                produto.setPreco(rs.getDouble("Preco"));
                 produto.setNome(rs.getString("Nome"));
                 produto.setUniMedida(rs.getString("UniMedida"));
                 produtos.add(produto);
