@@ -23,9 +23,11 @@ public class EstoqueRepositorio implements IRepositorio<Estoque> {
 
     @Override
     public void Salvar(Estoque estoque) {
-        if (estoque.getIdEstoque() == 0) {
+        Estoque estoque = CarregarEstoquePorProduto(item.getProduto().getIdProduto());
+        if (estoque == null) {
             Incluir(estoque);
         } else {
+            item.setIdEstoque(estoque.getIdEstoque());
             Alterar(estoque);
         }
     }
@@ -125,17 +127,12 @@ public class EstoqueRepositorio implements IRepositorio<Estoque> {
     }
 
     private void Incluir(Estoque item) {
-        Estoque estoque = CarregarEstoquePorProduto(item.getProduto().getIdProduto());
-        if (estoque != null) {
-            String sql = "INSERT INTO ESTOQUE(IdProduto,Quantidade) VALUES ('" + item.getProduto().getIdProduto() + "','" + item.getQuantidade() + "' )";
-            pers.ExecutaComando(sql);
-        } else {
-            Alterar(item);
-        }
+        String sql = "INSERT INTO ESTOQUE(IdProduto,Quantidade) VALUES ('" + item.getProduto().getIdProduto() + "','" + item.getQuantidade() + "' )";
+        pers.ExecutaComando(sql);
     }
 
     private void Alterar(Estoque item) {
-        String sql = "UPDATE ESTOQUE SET Quantidade=Quantidade + '" + item.getQuantidade() + "' where IdEstoque=" + item.getIdEstoque();
+        String sql = "UPDATE ESTOQUE SET Quantidade=Quantidade + " + item.getQuantidade() + " where IdEstoque=" + item.getIdEstoque();
         pers.ExecutaComando(sql);
     }
 }
