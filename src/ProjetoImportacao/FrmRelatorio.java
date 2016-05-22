@@ -59,23 +59,48 @@ public class FrmRelatorio extends javax.swing.JInternalFrame {
             new String [] {
                 "Tipo Movimentação", "Produto", "Qte", "Data"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         BR.setViewportView(jTable1);
+        if (jTable1.getColumnModel().getColumnCount() > 0) {
+            jTable1.getColumnModel().getColumn(0).setResizable(false);
+            jTable1.getColumnModel().getColumn(1).setResizable(false);
+            jTable1.getColumnModel().getColumn(2).setResizable(false);
+            jTable1.getColumnModel().getColumn(3).setResizable(false);
+        }
 
         Estoque.addTab("BR", BR);
 
         Relatorio.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+
             },
             new String [] {
-                "Produto", "Quantidade"
+                "Tipo Movimentação", "Produto", "Qte", "Data"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         CHL.setViewportView(Relatorio);
+        if (Relatorio.getColumnModel().getColumnCount() > 0) {
+            Relatorio.getColumnModel().getColumn(0).setResizable(false);
+            Relatorio.getColumnModel().getColumn(1).setResizable(false);
+            Relatorio.getColumnModel().getColumn(2).setResizable(false);
+            Relatorio.getColumnModel().getColumn(3).setResizable(false);
+        }
 
         Estoque.addTab("CHL", CHL);
 
@@ -128,15 +153,17 @@ public class FrmRelatorio extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
-        // TODO add your handling code here:
+            // TODO add your handling code here:
         MovimentoEstoqueRepositorio rep = new MovimentoEstoqueRepositorio();
         List<MovimentoEstoque> movimentos = rep.Listar(null);
         
-       // movimentos = movimentos.stream().filter(p -> "Chile".toUpperCase().equals(p.getPais().toUpperCase()) ).collect(Collectors.toList());
+        List<MovimentoEstoque> movimentosBr = movimentos.stream().filter(p -> "Brasil".toUpperCase().equals(p.getPais().toUpperCase()) ).collect(Collectors.toList());
         
-        DefaultTableModel userTableModel = new DefaultTableModel( new Object[]{ "Tipo Movimentação", "Produto", "Quantidade", "Data" }, 0 );
+        List<MovimentoEstoque> movimentosCh = movimentos.stream().filter(p -> "Chile".toUpperCase().equals(p.getPais().toUpperCase()) ).collect(Collectors.toList());
         
-        for (MovimentoEstoque m : movimentos) {
+        DefaultTableModel userTableModel = new DefaultTableModel( new Object[]{ "Tipo Movimentação", "Produto", "Qte", "Data" }, 0 );
+        
+        for (MovimentoEstoque m : movimentosBr) {
             Object[] o = new Object[4];
             o[0] = m.getTipoMovimentacao();
             o[1] = m.getEstoque().getProduto().getNome();
@@ -145,8 +172,20 @@ public class FrmRelatorio extends javax.swing.JInternalFrame {
             
             userTableModel.addRow(o);
           }
-        
         jTable1.setModel(userTableModel);
+        
+        userTableModel = new DefaultTableModel( new Object[]{ "Tipo Movimentação", "Produto", "Qte", "Data" }, 0 );
+        
+        for (MovimentoEstoque m : movimentosCh) {
+            Object[] o = new Object[4];
+            o[0] = m.getTipoMovimentacao();
+            o[1] = m.getEstoque().getProduto().getNome();
+            o[2] = m.getQuantidade();
+            o[3] = m.getData();
+            
+            userTableModel.addRow(o);
+          }
+        Relatorio.setModel(userTableModel);
     }//GEN-LAST:event_btnAtualizarActionPerformed
 
 

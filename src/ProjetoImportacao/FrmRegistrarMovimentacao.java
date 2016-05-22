@@ -15,6 +15,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JOptionPane;
 
@@ -238,7 +239,9 @@ public class FrmRegistrarMovimentacao extends javax.swing.JInternalFrame {
             MovimentoEstoqueRepositorio repMov = new MovimentoEstoqueRepositorio();
             
             MovimentoEstoque movimento = new MovimentoEstoque();
-            movimento.setData(new Date());
+            
+            SimpleDateFormat f = new SimpleDateFormat("dd/mm/yyyy hh:mm:ss");            
+            movimento.setData(f.format(new Date()));
             movimento.setEstoque(estoque);
             movimento.setPais("Chile");
             movimento.setQuantidade(quantidade);

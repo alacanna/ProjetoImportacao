@@ -32,7 +32,7 @@ public class FrmRegistrarEnvio extends javax.swing.JInternalFrame {
         GerarCodigoBarras();
         txtData.setEnabled(false);
        
-        SimpleDateFormat f = new SimpleDateFormat("dd/mm/yyyy");
+        SimpleDateFormat f = new SimpleDateFormat("dd/mm/yyyy hh:mm:ss");
         txtData.setText(f.format(new Date()));
         
     }
