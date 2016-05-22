@@ -52,7 +52,7 @@ public class ImportacaoRepositorio implements IRepositorio<Importacao> {
         movEstoque.setQuantidade(item.getQuantidade());
         movEstoque.setTipoMovimentacao("Saída");
         movEstoque.setImportacao(item);
-        movEstoque.setEstoque(repEstoque.CarregarEstoquePorProduto(item.getProduto().getIdProduto()));
+        movEstoque.setEstoque(repEstoque.CarregarEstoquePorProduto(item.getProduto().getIdProduto(), "CHL"));
         repMov.Salvar(movEstoque);
     }
 
