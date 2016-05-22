@@ -5,6 +5,12 @@
  */
 package ProjetoImportacao;
 
+import ProjetoImportacao.Model.Estoque;
+import ProjetoImportacao.Model.Produto;
+import ProjetoImportacao.Model.Repositorio.EstoqueRepositorio;
+import ProjetoImportacao.Model.Repositorio.ProdutoRepositorio;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author VanessaCristine
@@ -16,6 +22,8 @@ public class FrmRegistrarMovimentacao extends javax.swing.JInternalFrame {
      */
     public FrmRegistrarMovimentacao() {
         initComponents();
+        Util.carregarProduto(cmbProduto, new ProdutoRepositorio());
+
     }
 
     /**
@@ -35,6 +43,8 @@ public class FrmRegistrarMovimentacao extends javax.swing.JInternalFrame {
         txtQte = new javax.swing.JTextField();
         lblProduto = new javax.swing.JLabel();
         cmbProduto = new javax.swing.JComboBox<>();
+        jLabel1 = new javax.swing.JLabel();
+        cmbPais = new javax.swing.JComboBox<>();
         btnLimpar = new javax.swing.JButton();
         btnSalvar = new javax.swing.JButton();
 
@@ -52,6 +62,7 @@ public class FrmRegistrarMovimentacao extends javax.swing.JInternalFrame {
         lblTipoMov.setText("Tipo Movimentação:");
 
         cmbTipoMov.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Entrada", "Saída", "Perda" }));
+        cmbTipoMov.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         cmbTipoMov.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmbTipoMovActionPerformed(evt);
@@ -68,6 +79,16 @@ public class FrmRegistrarMovimentacao extends javax.swing.JInternalFrame {
 
         lblProduto.setText("Selecione o Produto:");
 
+        jLabel1.setText("País:");
+
+        cmbPais.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Brasil", "Chile" }));
+        cmbPais.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        cmbPais.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbPaisActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout PProdutoLayout = new javax.swing.GroupLayout(PProduto);
         PProduto.setLayout(PProdutoLayout);
         PProdutoLayout.setHorizontalGroup(
@@ -76,36 +97,42 @@ public class FrmRegistrarMovimentacao extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(PProdutoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblTipoMov)
-                    .addComponent(cmbTipoMov, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 95, Short.MAX_VALUE)
+                    .addComponent(cmbTipoMov, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(PProdutoLayout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(jLabel1))
+                    .addComponent(cmbPais, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 105, Short.MAX_VALUE)
                 .addGroup(PProdutoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblProduto)
                     .addGroup(PProdutoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(cmbProduto, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(lblQte, javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(txtQte, javax.swing.GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
         PProdutoLayout.setVerticalGroup(
             PProdutoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PProdutoLayout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(PProdutoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(PProdutoLayout.createSequentialGroup()
-                        .addGap(29, 29, 29)
-                        .addComponent(lblTipoMov)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cmbTipoMov, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(16, 16, 16))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PProdutoLayout.createSequentialGroup()
-                        .addContainerGap()
                         .addComponent(lblProduto)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cmbProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
-                .addComponent(lblQte)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtQte, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(62, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lblQte)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtQte, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(PProdutoLayout.createSequentialGroup()
+                        .addComponent(lblTipoMov)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cmbTipoMov, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cmbPais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(203, Short.MAX_VALUE))
         );
 
         btnLimpar.setText("Limpar");
@@ -146,35 +173,48 @@ public class FrmRegistrarMovimentacao extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnLimpar)
                     .addComponent(btnSalvar))
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addContainerGap(50, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void cmbTipoMovActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbTipoMovActionPerformed
+    private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
+        txtQte.setText("");
+    }//GEN-LAST:event_btnLimparActionPerformed
+
+    private void cmbPaisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbPaisActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_cmbTipoMovActionPerformed
+    }//GEN-LAST:event_cmbPaisActionPerformed
 
     private void txtQteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtQteActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtQteActionPerformed
 
-    private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
-        txtQte.setText("");
-    }//GEN-LAST:event_btnLimparActionPerformed
+    private void cmbTipoMovActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbTipoMovActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbTipoMovActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel PProduto;
     private javax.swing.JButton btnLimpar;
     private javax.swing.JButton btnSalvar;
+    private javax.swing.JComboBox<String> cmbPais;
     private javax.swing.JComboBox<String> cmbProduto;
     private javax.swing.JComboBox<String> cmbTipoMov;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel lblProduto;
     private javax.swing.JLabel lblQte;
     private javax.swing.JLabel lblTipoMov;
     private javax.swing.JLabel lblTituloPagina;
     private javax.swing.JTextField txtQte;
     // End of variables declaration//GEN-END:variables
+
+    private void limpar() {
+        txtQte.setText("");
+        cmbProduto.setSelectedIndex(0);
+        cmbTipoMov.setSelectedIndex(0);
+        cmbPais.setSelectedIndex(0);
+    }
 }
