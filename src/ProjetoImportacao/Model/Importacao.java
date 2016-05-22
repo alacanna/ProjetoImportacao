@@ -23,23 +23,23 @@ public class Importacao {
         this.idImportacao = idImportacao;
     }
 
-    private Date dataEnvio;
+    private String dataEnvio;
 
-    public Date getDataEnvio() {
+    public String getDataEnvio() {
         return dataEnvio;
     }
     
-    public void setDataEnvio(Date dataEnvio) {
+    public void setDataEnvio(String dataEnvio) {
         this.dataEnvio = dataEnvio;
     }
     
-    private Date dataRecebimento;
+    private String dataRecebimento;
 
-    public Date getDataRecebimento() {
+    public String getDataRecebimento() {
         return dataRecebimento;
     }
     
-    public void setDataRecebimento(Date dataRecebimento) {
+    public void setDataRecebimento(String dataRecebimento) {
         this.dataRecebimento = dataRecebimento;
     }
     

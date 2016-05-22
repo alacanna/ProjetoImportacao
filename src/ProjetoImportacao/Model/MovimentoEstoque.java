@@ -5,7 +5,6 @@
  */
 package ProjetoImportacao.Model;
 
-import java.util.Date;
 
 /**
  *

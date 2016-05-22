@@ -7,6 +7,7 @@ package ProjetoImportacao.Model.Repositorio;
 
 import ProjetoImportacao.Model.Importacao;
 import ProjetoImportacao.Model.MovimentoEstoque;
+import ProjetoImportacao.Util;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -45,7 +46,8 @@ public class ImportacaoRepositorio implements IRepositorio<Importacao> {
         EstoqueRepositorio repEstoque = new EstoqueRepositorio();
         MovimentoEstoque movEstoque = new MovimentoEstoque();
 
-        movEstoque.setData(new Date());
+        
+        movEstoque.setData(Util.sdf.format(new Date()));
         movEstoque.setPais("Chile");
         movEstoque.setQuantidade(item.getQuantidade());
         movEstoque.setTipoMovimentacao("Saída");
@@ -69,8 +71,8 @@ public class ImportacaoRepositorio implements IRepositorio<Importacao> {
                 importacao.setCodigoBarras(rs.getInt("CodBarras"));
                 importacao.setQuantidade(rs.getInt("Quantidade"));
                 importacao.setStatus(rs.getString("Status"));
-                importacao.setDataRecebimento(rs.getDate("DtRecebimento"));
-                importacao.setDataEnvio(rs.getDate("DtEnvio"));
+                importacao.setDataRecebimento(rs.getString("DtRecebimento"));
+                importacao.setDataEnvio(rs.getString("DtEnvio"));
                 importacao.setProduto(new ProdutoRepositorio().Carregar(rs.getInt("IdProduto")));
                 importacoes.add(importacao);
             }
@@ -98,9 +100,9 @@ public class ImportacaoRepositorio implements IRepositorio<Importacao> {
                 if (rs.next()) {
                     importacao.setCodigoBarras(rs.getInt("CodBarras"));
                     importacao.setQuantidade(rs.getInt("Quantidade"));
-                    importacao.setDataRecebimento(rs.getDate("DtRecebimento"));
+                    importacao.setDataRecebimento(rs.getString("DtRecebimento"));
                     importacao.setStatus(rs.getString("Status"));
-                    importacao.setDataEnvio(rs.getDate("DtEnvio"));
+                    importacao.setDataEnvio(rs.getString("DtEnvio"));
                     importacao.setProduto(new ProdutoRepositorio().Carregar(rs.getInt("IdProduto")));
                 }
             }
@@ -119,7 +121,7 @@ public class ImportacaoRepositorio implements IRepositorio<Importacao> {
     }
 
     public Importacao CarregarPeloCodigoDeBarras(int codigoBarras) {
-        String sql = "SELECT * FROM MovimentacaoEstoque where CodBarras=" + codigoBarras;
+        String sql = "SELECT * FROM Importacao where CodBarras=" + codigoBarras;
         Importacao importacao = new Importacao();
         ResultSet rs = pers.ExecutaLista(sql);
         try {
@@ -128,9 +130,11 @@ public class ImportacaoRepositorio implements IRepositorio<Importacao> {
                 if (rs.next()) {
                     importacao.setCodigoBarras(rs.getInt("CodBarras"));
                     importacao.setQuantidade(rs.getInt("Quantidade"));
-                    importacao.setDataRecebimento(rs.getDate("DtRecebimento"));
-                    importacao.setStatus(rs.getString("Status"));
-                    importacao.setDataEnvio(rs.getDate("DtEnvio"));
+                    importacao.setDataRecebimento(rs.getString("DtRecebimento"));
+                    
+                    importacao.setStatus(rs.getString("Status"));                    
+                    importacao.setDataEnvio(rs.getString("DtEnvio"));
+                    
                     importacao.setProduto(new ProdutoRepositorio().Carregar(rs.getInt("IdProduto")));
                 }
             }
