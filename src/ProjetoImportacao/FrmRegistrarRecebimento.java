@@ -5,6 +5,10 @@
  */
 package ProjetoImportacao;
 
+import ProjetoImportacao.Model.Importacao;
+import ProjetoImportacao.Model.Repositorio.ImportacaoRepositorio;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author VanessaCristine
@@ -72,6 +76,11 @@ public class FrmRegistrarRecebimento extends javax.swing.JInternalFrame {
         lblProduto.setText("Produto:");
 
         btnPesquisar.setText("Pesquisar");
+        btnPesquisar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPesquisarActionPerformed(evt);
+            }
+        });
 
         lblDtEnvio.setText("Data de Envio:");
 
@@ -199,6 +208,21 @@ public class FrmRegistrarRecebimento extends javax.swing.JInternalFrame {
     private void txtDtEnvioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDtEnvioActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtDtEnvioActionPerformed
+
+    private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
+       int codBarras = Integer.parseInt(txtCodBarras.getText());
+     
+       ImportacaoRepositorio rep = new ImportacaoRepositorio();
+       Importacao importacao = rep.CarregarPeloCodigoDeBarras(codBarras);
+       
+       if(importacao != null){
+           txtDtEnvio.setText(String.valueOf(importacao.getDataEnvio()));
+           txtProduto.setText(String.valueOf(importacao.getProduto().getNome()));
+           txtQte.setText(String.valueOf(importacao.getQuantidade()));
+       }else{
+            JOptionPane.showMessageDialog(null, "Não existe importação com esse código!");
+       }
+    }//GEN-LAST:event_btnPesquisarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

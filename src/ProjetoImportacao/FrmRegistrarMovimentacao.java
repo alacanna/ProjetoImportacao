@@ -11,10 +11,7 @@ import ProjetoImportacao.Model.Produto;
 import ProjetoImportacao.Model.Repositorio.EstoqueRepositorio;
 import ProjetoImportacao.Model.Repositorio.MovimentoEstoqueRepositorio;
 import ProjetoImportacao.Model.Repositorio.ProdutoRepositorio;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.util.Date;
 import javax.swing.JOptionPane;
 
@@ -237,8 +234,9 @@ public class FrmRegistrarMovimentacao extends javax.swing.JInternalFrame {
             
             MovimentoEstoqueRepositorio repMov = new MovimentoEstoqueRepositorio();
             
+            
             MovimentoEstoque movimento = new MovimentoEstoque();
-            movimento.setData(new Date());
+            movimento.setData(Util.sdf.format(new Date()));
             movimento.setEstoque(estoque);
             movimento.setPais("Chile");
             movimento.setQuantidade(quantidade);

@@ -7,6 +7,7 @@ package ProjetoImportacao;
 
 import ProjetoImportacao.Model.Produto;
 import ProjetoImportacao.Model.Repositorio.IRepositorio;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import javax.swing.JComboBox;
 
@@ -15,13 +16,14 @@ import javax.swing.JComboBox;
  * @author VanessaCristine
  */
 public class Util<T> {
-   
-public static <T>void carregarProduto (JComboBox comboBox, IRepositorio<T> rep)
-    {        
-        List<T> items =  rep.Listar(null);
+
+    public static SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+
+    public static <T> void carregarProduto(JComboBox comboBox, IRepositorio<T> rep) {
+        List<T> items = rep.Listar(null);
         items.stream().forEach((p) -> {
             comboBox.addItem(p);
         });
     }
-    
+
 }
