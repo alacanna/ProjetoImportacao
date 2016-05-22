@@ -132,7 +132,7 @@ public class FrmRegistrarMovimentacao extends javax.swing.JInternalFrame {
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cmbPais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(203, Short.MAX_VALUE))
+                .addContainerGap(100, Short.MAX_VALUE))
         );
 
         btnLimpar.setText("Limpar");
@@ -143,6 +143,11 @@ public class FrmRegistrarMovimentacao extends javax.swing.JInternalFrame {
         });
 
         btnSalvar.setText("Salvar");
+        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -180,7 +185,7 @@ public class FrmRegistrarMovimentacao extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
-        txtQte.setText("");
+        limpar();
     }//GEN-LAST:event_btnLimparActionPerformed
 
     private void cmbPaisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbPaisActionPerformed
@@ -194,6 +199,20 @@ public class FrmRegistrarMovimentacao extends javax.swing.JInternalFrame {
     private void cmbTipoMovActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbTipoMovActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cmbTipoMovActionPerformed
+
+    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+        // TODO add your handling code here:
+        Estoque estoque = new Estoque();
+        estoque.setQuantidade(Integer.parseInt(txtQte.getText()));
+        estoque.setProduto((Produto)cmbProduto.getSelectedItem());
+        
+        EstoqueRepositorio rep = new EstoqueRepositorio();
+        rep.Salvar(estoque);
+        Limpar();
+        
+        JOptionPane.showMessageDialog(null, "Movimentação realizada com sucesso!");
+
+    }//GEN-LAST:event_btnSalvarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -211,7 +230,7 @@ public class FrmRegistrarMovimentacao extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtQte;
     // End of variables declaration//GEN-END:variables
 
-    private void limpar() {
+    private void Limpar() {
         txtQte.setText("");
         cmbProduto.setSelectedIndex(0);
         cmbTipoMov.setSelectedIndex(0);
