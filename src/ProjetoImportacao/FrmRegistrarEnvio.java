@@ -8,14 +8,9 @@ import ProjetoImportacao.Model.Importacao;
 import ProjetoImportacao.Model.Produto;
 import ProjetoImportacao.Model.Repositorio.ImportacaoRepositorio;
 import ProjetoImportacao.Model.Repositorio.ProdutoRepositorio;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+
 import java.util.Date;
-import java.util.List;
 import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -31,9 +26,9 @@ public class FrmRegistrarEnvio extends javax.swing.JInternalFrame {
         Util.carregarProduto(cmbProduto, new ProdutoRepositorio());
         GerarCodigoBarras();
         txtData.setEnabled(false);
-       
-        SimpleDateFormat f = new SimpleDateFormat("dd/mm/yyyy hh:mm:ss");
-        txtData.setText(f.format(new Date()));
+        
+        txtData.setText(Util.sdf.format(new Date()));
+
         
     }
 
@@ -231,13 +226,9 @@ public class FrmRegistrarEnvio extends javax.swing.JInternalFrame {
         Importacao importa = new Importacao();
         
         importa.setCodigoBarras(Integer.parseInt(txtCodBarras.getText()));
-        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+ 
+        importa.setDataEnvio(txtData.getText());
         
-        try {
-            importa.setDataEnvio(formato.parse(txtData.getText()));
-        } catch (ParseException ex) {
-            Logger.getLogger(FrmRegistrarEnvio.class.getName()).log(Level.SEVERE, null, ex);
-        }
         ImportacaoRepositorio rep = new ImportacaoRepositorio();
         
         Produto p = (Produto)cmbProduto.getSelectedItem();
