@@ -5,12 +5,12 @@
  */
 package ProjetoImportacao.Model.Repositorio;
 
-import ProjetoImportacao.Model.Estoque;
 import ProjetoImportacao.Model.Importacao;
 import ProjetoImportacao.Model.MovimentoEstoque;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -28,6 +28,26 @@ public class ImportacaoRepositorio implements IRepositorio<Importacao>{
         
         String sql = "INSERT INTO Importacao(IdProduto,DtEnvio,DtRecebimento,Quantidade,CodBarras,Status) VALUES (" + item.getProduto().getIdProduto()+",'" + item.getDataEnvio()+"','" + item.getDataRecebimento()+"'," + item.getQuantidade() +"','" + item.getCodigoBarras()+"','" + item.getStatus() + "')";
         pers.ExecutaComando(sql);
+        
+        ResultSet rs =  pers.ExecutaLista("SELECT @@Identity as Id");
+                
+        try {
+            item.setIdImportacao(rs.getInt("Id"));
+        } catch (SQLException ex) {
+            Logger.getLogger(ImportacaoRepositorio.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        MovimentoEstoqueRepositorio repMov = new MovimentoEstoqueRepositorio();
+        
+        MovimentoEstoque movEstoque = new MovimentoEstoque();
+        
+        movEstoque.setData(new Date());
+        movEstoque.setPais("CHILE");
+        movEstoque.setQuantidade(item.getQuantidade());
+        movEstoque.setTipoMovimentacao("Saida");
+        movEstoque.setImportacao(item);
+        
+        repMov.Salvar(movEstoque);
     }
     
     @Override
@@ -67,7 +87,35 @@ public class ImportacaoRepositorio implements IRepositorio<Importacao>{
 
     @Override
     public Importacao Carregar(int codigo) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       String sql = "SELECT * FROM MovimentacaoEstoque where IdMov=" + codigo; 
+        Importacao importacao = new Importacao();
+       ResultSet rs = pers.ExecutaLista(sql);
+       try 
+       {
+      
+       if(rs != null)
+       {
+          importacao.setCodigoBarras(rs.getInt("CodBarras"));
+          importacao.setQuantidade(rs.getInt("Quantidade"));
+          importacao.setDataRecebimento(rs.getDate("DtRecebimento"));
+          importacao.setStatus(rs.getString("Status"));
+          importacao.setDataEnvio(rs.getDate("DtEnvio"));
+          importacao.setProduto(new ProdutoRepositorio().Carregar(rs.getInt("IdProduto")));
+       }
+       }
+       catch (SQLException ex) {
+            Logger.getLogger(ProdutoRepositorio.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       finally{
+           try {
+               rs.close();
+           } catch (SQLException ex) {
+               Logger.getLogger(ProdutoRepositorio.class.getName()).log(Level.SEVERE, null, ex);
+           }
+        } 
+
+       return importacao;
+       
     }
 
     @Override
