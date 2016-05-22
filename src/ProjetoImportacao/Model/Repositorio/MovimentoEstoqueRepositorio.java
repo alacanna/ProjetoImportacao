@@ -57,7 +57,7 @@ public class MovimentoEstoqueRepositorio implements IRepositorio<MovimentoEstoqu
     @Override
     public List<MovimentoEstoque> Listar(String[] params) {
         
-        ResultSet rs = pers.ExecutaLista("SELECT * FROM MovimentacaoEstoque Order by data");
+        ResultSet rs = pers.ExecutaLista("SELECT * FROM MovimentacaoEstoque Order by IdMov");
         
         List<MovimentoEstoque>  movimentacoes = new ArrayList<>();
         MovimentoEstoque movimentacao;

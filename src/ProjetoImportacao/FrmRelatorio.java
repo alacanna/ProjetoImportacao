@@ -5,6 +5,12 @@
  */
 package ProjetoImportacao;
 
+import ProjetoImportacao.Model.MovimentoEstoque;
+import ProjetoImportacao.Model.Repositorio.MovimentoEstoqueRepositorio;
+import java.util.List;
+import java.util.stream.Collectors;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author VanessaCristine
@@ -30,10 +36,10 @@ public class FrmRelatorio extends javax.swing.JInternalFrame {
         lblTituloPagina = new javax.swing.JLabel();
         PProduto = new javax.swing.JPanel();
         Estoque = new javax.swing.JTabbedPane();
-        CHL = new javax.swing.JScrollPane();
-        Relatorio = new javax.swing.JTable();
         BR = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        CHL = new javax.swing.JScrollPane();
+        Relatorio = new javax.swing.JTable();
         btnAtualizar = new javax.swing.JButton();
 
         setClosable(true);
@@ -45,6 +51,18 @@ public class FrmRelatorio extends javax.swing.JInternalFrame {
         lblTituloPagina.setToolTipText("");
 
         PProduto.setBorder(javax.swing.BorderFactory.createTitledBorder("Estoque"));
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Tipo Movimentação", "Produto", "Qte", "Data"
+            }
+        ));
+        BR.setViewportView(jTable1);
+
+        Estoque.addTab("BR", BR);
 
         Relatorio.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -61,29 +79,13 @@ public class FrmRelatorio extends javax.swing.JInternalFrame {
 
         Estoque.addTab("CHL", CHL);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
-            },
-            new String [] {
-                "Produto", "Quantidade"
-            }
-        ));
-        BR.setViewportView(jTable1);
-
-        Estoque.addTab("BR", BR);
-
         javax.swing.GroupLayout PProdutoLayout = new javax.swing.GroupLayout(PProduto);
         PProduto.setLayout(PProdutoLayout);
         PProdutoLayout.setHorizontalGroup(
             PProdutoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PProdutoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(Estoque, javax.swing.GroupLayout.DEFAULT_SIZE, 501, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(Estoque, javax.swing.GroupLayout.DEFAULT_SIZE, 467, Short.MAX_VALUE))
         );
         PProdutoLayout.setVerticalGroup(
             PProdutoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -102,14 +104,14 @@ public class FrmRelatorio extends javax.swing.JInternalFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(PProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblTituloPagina, javax.swing.GroupLayout.PREFERRED_SIZE, 523, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 11, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
                 .addGap(218, 218, 218)
                 .addComponent(btnAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblTituloPagina, javax.swing.GroupLayout.PREFERRED_SIZE, 481, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(PProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 12, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -119,7 +121,7 @@ public class FrmRelatorio extends javax.swing.JInternalFrame {
                 .addComponent(PProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnAtualizar)
-                .addGap(0, 44, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -127,6 +129,24 @@ public class FrmRelatorio extends javax.swing.JInternalFrame {
 
     private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
         // TODO add your handling code here:
+        MovimentoEstoqueRepositorio rep = new MovimentoEstoqueRepositorio();
+        List<MovimentoEstoque> movimentos = rep.Listar(null);
+        
+       // movimentos = movimentos.stream().filter(p -> "Chile".toUpperCase().equals(p.getPais().toUpperCase()) ).collect(Collectors.toList());
+        
+        DefaultTableModel userTableModel = new DefaultTableModel( new Object[]{ "Tipo Movimentação", "Produto", "Quantidade", "Data" }, 0 );
+        
+        for (MovimentoEstoque m : movimentos) {
+            Object[] o = new Object[4];
+            o[0] = m.getTipoMovimentacao();
+            o[1] = m.getEstoque().getProduto().getNome();
+            o[2] = m.getQuantidade();
+            o[3] = m.getData();
+            
+            userTableModel.addRow(o);
+          }
+        
+        jTable1.setModel(userTableModel);
     }//GEN-LAST:event_btnAtualizarActionPerformed
 
 
