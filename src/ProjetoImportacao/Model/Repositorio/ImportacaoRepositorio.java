@@ -27,9 +27,9 @@ public class ImportacaoRepositorio implements IRepositorio<Importacao> {
 
     @Override
     public void Salvar(Importacao item) {
-        
+
         item.setDataRecebimento(item.getDataEnvio());
-        
+
         String sql = "INSERT INTO Importacao(IdProduto,DtEnvio,DtRecebimento,Quantidade,CodBarras,Status) VALUES (" + item.getProduto().getIdProduto() + ",'" + item.getDataEnvio() + "','" + item.getDataRecebimento() + "','" + item.getQuantidade() + "','" + item.getCodigoBarras() + "','" + item.getStatus() + "')";
         pers.ExecutaComando(sql);
 
@@ -47,7 +47,6 @@ public class ImportacaoRepositorio implements IRepositorio<Importacao> {
         EstoqueRepositorio repEstoque = new EstoqueRepositorio();
         MovimentoEstoque movEstoque = new MovimentoEstoque();
 
-        
         movEstoque.setData(Util.sdf.format(new Date()));
         movEstoque.setPais("CHL");
         movEstoque.setQuantidade(item.getQuantidade());
@@ -56,12 +55,40 @@ public class ImportacaoRepositorio implements IRepositorio<Importacao> {
         movEstoque.setEstoque(repEstoque.CarregarEstoquePorProduto(item.getProduto().getIdProduto(), "CHL"));
         repMov.Salvar(movEstoque);
     }
+
     public void Alterar(Importacao item) {
-        String sql = "UPDATE Importacao SET Status= '" + item.getStatus() +"' where CodBarras=" + item.getCodigoBarras();
-        System.out.println("Query "+ sql);
+        String sql = "UPDATE Importacao SET Status= '" + item.getStatus() + "' where CodBarras=" + item.getCodigoBarras();
+        System.out.println("Query " + sql);
         pers.ExecutaComando(sql);
-    }    
-    
+
+        MovimentoEstoque movimentoEstoque = new MovimentoEstoque();
+        movimentoEstoque.setData(Util.sdf.format(new Date()));
+        movimentoEstoque.setTipoMovimentacao("ENTRADA");
+        movimentoEstoque.setPais("BR");
+        
+        Estoque estoque = new Estoque();
+        estoque.setProduto(item.getProduto());
+        
+        movimentoEstoque.setEstoque(estoque);
+//        movimentoEstoque.setImportacao(item.getIdImportacao());
+/*
+        EstoqueRepositorio estoqueRepositorio = new EstoqueRepositorio();
+        Estoque estoque = new Estoque();
+        estoque.setPais("BR");
+        estoque.setProduto(item.getProduto());
+        estoque.setQuantidade(item.getQuantidade());
+
+        estoqueRepositorio.Salvar(estoque);
+
+        estoque = estoqueRepositorio.CarregarEstoquePorProduto(item.getProduto().getIdProduto(), "BR");
+
+        movimentoEstoque.setEstoque(estoque);
+*/
+        MovimentoEstoqueRepositorio movimentoEstoqueRepositorio = new MovimentoEstoqueRepositorio();
+        movimentoEstoqueRepositorio.Salvar(movimentoEstoque);
+        
+    }
+
     @Override
     public List<Importacao> Listar(String[] params) {
 
@@ -137,10 +164,10 @@ public class ImportacaoRepositorio implements IRepositorio<Importacao> {
                     importacao.setCodigoBarras(rs.getInt("CodBarras"));
                     importacao.setQuantidade(rs.getInt("Quantidade"));
                     importacao.setDataRecebimento(rs.getString("DtRecebimento"));
-                    
-                    importacao.setStatus(rs.getString("Status"));                    
+
+                    importacao.setStatus(rs.getString("Status"));
                     importacao.setDataEnvio(rs.getString("DtEnvio"));
-                    
+
                     importacao.setProduto(new ProdutoRepositorio().Carregar(rs.getInt("IdProduto")));
                 }
             }
@@ -157,7 +184,7 @@ public class ImportacaoRepositorio implements IRepositorio<Importacao> {
         return importacao;
 
     }
-    
+
     @Override
     public void Remover(Importacao item) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
