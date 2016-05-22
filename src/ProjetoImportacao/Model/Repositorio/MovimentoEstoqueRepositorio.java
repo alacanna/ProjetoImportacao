@@ -72,7 +72,7 @@ public class MovimentoEstoqueRepositorio implements IRepositorio<MovimentoEstoqu
                 movimentacao.setImportacao(new ImportacaoRepositorio().Carregar(rs.getInt("IdImportacao")));
                 movimentacao.setIdMovimentoEstoque(rs.getInt("IdMov"));
                 movimentacao.setEstoque(new EstoqueRepositorio().Carregar(rs.getInt("IdEstoque")));
-                movimentacao.setData(rs.getDate("data"));
+                movimentacao.setData(rs.getString("data"));
                 movimentacoes.add(movimentacao);
             }
         } catch (SQLException ex) {
