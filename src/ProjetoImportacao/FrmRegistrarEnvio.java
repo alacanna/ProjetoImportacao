@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package ProjetoImportacao;
+
 import ProjetoImportacao.Model.Importacao;
 import ProjetoImportacao.Model.Produto;
 import ProjetoImportacao.Model.Repositorio.ImportacaoRepositorio;
@@ -11,6 +12,7 @@ import ProjetoImportacao.Model.Repositorio.ProdutoRepositorio;
 
 import java.util.Date;
 import java.util.Random;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -26,10 +28,9 @@ public class FrmRegistrarEnvio extends javax.swing.JInternalFrame {
         Util.carregarProduto(cmbProduto, new ProdutoRepositorio());
         GerarCodigoBarras();
         txtData.setEnabled(false);
-        
+
         txtData.setText(Util.sdf.format(new Date()));
 
-        
     }
 
     public void GerarCodigoBarras() {
@@ -220,23 +221,27 @@ public class FrmRegistrarEnvio extends javax.swing.JInternalFrame {
 
     private void btRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRegistrarActionPerformed
         // TODO add your handling code here:
-        
-        if(txtQte.getText() != "" && txtQte.getText() != "0")
-        {
-        Importacao importa = new Importacao();
-        
-        importa.setCodigoBarras(Integer.parseInt(txtCodBarras.getText()));
- 
-        importa.setDataEnvio(txtData.getText());
-        
-        ImportacaoRepositorio rep = new ImportacaoRepositorio();
-        
-        Produto p = (Produto)cmbProduto.getSelectedItem();
-        importa.setProduto(p);
-        importa.setQuantidade(Integer.parseInt(txtQte.getText()));
-        importa.setStatus("Enviado");
-        
-        rep.Salvar(importa);
+        try {
+            if (txtQte.getText() != "" && txtQte.getText() != "0") {
+                Importacao importa = new Importacao();
+
+                importa.setCodigoBarras(Integer.parseInt(txtCodBarras.getText()));
+
+                importa.setDataEnvio(txtData.getText());
+
+                ImportacaoRepositorio rep = new ImportacaoRepositorio();
+
+                Produto p = (Produto) cmbProduto.getSelectedItem();
+                importa.setProduto(p);
+                importa.setQuantidade(Integer.parseInt(txtQte.getText()));
+                importa.setStatus("Enviado");
+
+                rep.Salvar(importa);
+
+                JOptionPane.showMessageDialog(null, "Movimentação realizada com sucesso!");
+            }
+        } catch (NumberFormatException exception) {
+            JOptionPane.showMessageDialog(null, "Por favor digite uma quantidade válida!");
         }
     }//GEN-LAST:event_btRegistrarActionPerformed
 
