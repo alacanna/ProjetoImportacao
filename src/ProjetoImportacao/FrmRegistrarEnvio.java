@@ -31,8 +31,6 @@ public class FrmRegistrarEnvio extends javax.swing.JInternalFrame {
        
         List<Produto> produtos =  rep.Listar(null);
         
-        // DisplayValueModel cb = null;
-        // ArrayList<DisplayValueModel> lst=new ArrayList<DisplayValueModel>();
         produtos.stream().forEach((p) -> {
             cmbProduto.addItem(p);
         });
