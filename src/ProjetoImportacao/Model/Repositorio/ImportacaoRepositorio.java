@@ -25,7 +25,9 @@ public class ImportacaoRepositorio implements IRepositorio<Importacao> {
 
     @Override
     public void Salvar(Importacao item) {
-
+        
+        item.setDataRecebimento(item.getDataEnvio());
+        
         String sql = "INSERT INTO Importacao(IdProduto,DtEnvio,DtRecebimento,Quantidade,CodBarras,Status) VALUES (" + item.getProduto().getIdProduto() + ",'" + item.getDataEnvio() + "','" + item.getDataRecebimento() + "','" + item.getQuantidade() + "','" + item.getCodigoBarras() + "','" + item.getStatus() + "')";
         pers.ExecutaComando(sql);
 
