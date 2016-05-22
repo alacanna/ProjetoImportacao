@@ -22,6 +22,7 @@ public class FrmRelatorio extends javax.swing.JInternalFrame {
      */
     public FrmRelatorio() {
         initComponents();
+        CarregarGrid();
     }
 
     /**
@@ -150,7 +151,12 @@ public class FrmRelatorio extends javax.swing.JInternalFrame {
 
     private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
             // TODO add your handling code here:
-        EstoqueRepositorio rep = new EstoqueRepositorio();
+       CarregarGrid();
+    }//GEN-LAST:event_btnAtualizarActionPerformed
+
+    public void CarregarGrid()
+    {
+     EstoqueRepositorio rep = new EstoqueRepositorio();
         List<Estoque> movimentos = rep.Listar(null);
         
         List<Estoque> movimentosBr = movimentos.stream().filter(p -> "br".toUpperCase().equals(p.getPais().toUpperCase()) ).collect(Collectors.toList());
@@ -178,8 +184,7 @@ public class FrmRelatorio extends javax.swing.JInternalFrame {
             userTableModel.addRow(o);
           }
         Relatorio.setModel(userTableModel);
-    }//GEN-LAST:event_btnAtualizarActionPerformed
-
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane BR;

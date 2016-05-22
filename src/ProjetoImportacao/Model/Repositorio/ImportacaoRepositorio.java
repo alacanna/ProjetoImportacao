@@ -92,7 +92,7 @@ public class ImportacaoRepositorio implements IRepositorio<Importacao> {
     @Override
     public List<Importacao> Listar(String[] params) {
 
-        ResultSet rs = pers.ExecutaLista("SELECT * FROM Importacao Order by dataEnvio");
+        ResultSet rs = pers.ExecutaLista("SELECT * FROM Importacao Order by status");
 
         List<Importacao> importacoes = new ArrayList<>();
         Importacao importacao;
@@ -107,6 +107,7 @@ public class ImportacaoRepositorio implements IRepositorio<Importacao> {
                 importacao.setDataRecebimento(rs.getString("DtRecebimento"));
                 importacao.setDataEnvio(rs.getString("DtEnvio"));
                 importacao.setProduto(new ProdutoRepositorio().Carregar(rs.getInt("IdProduto")));
+                importacao.setIdImportacao(rs.getInt("IdImport"));
                 importacoes.add(importacao);
             }
         } catch (SQLException ex) {
@@ -124,19 +125,20 @@ public class ImportacaoRepositorio implements IRepositorio<Importacao> {
 
     @Override
     public Importacao Carregar(int codigo) {
-        String sql = "SELECT * FROM MovimentacaoEstoque where IdMov=" + codigo;
+        String sql = "SELECT * FROM Importacao where IdImport=" + codigo;
         Importacao importacao = new Importacao();
         ResultSet rs = pers.ExecutaLista(sql);
         try {
 
             if (rs != null) {
                 if (rs.next()) {
-                    importacao.setCodigoBarras(rs.getInt("CodBarras"));
-                    importacao.setQuantidade(rs.getInt("Quantidade"));
-                    importacao.setDataRecebimento(rs.getString("DtRecebimento"));
-                    importacao.setStatus(rs.getString("Status"));
-                    importacao.setDataEnvio(rs.getString("DtEnvio"));
-                    importacao.setProduto(new ProdutoRepositorio().Carregar(rs.getInt("IdProduto")));
+                importacao.setCodigoBarras(rs.getInt("CodBarras"));
+                importacao.setQuantidade(rs.getInt("Quantidade"));
+                importacao.setStatus(rs.getString("Status"));
+                importacao.setDataRecebimento(rs.getString("DtRecebimento"));
+                importacao.setDataEnvio(rs.getString("DtEnvio"));
+                importacao.setProduto(new ProdutoRepositorio().Carregar(rs.getInt("IdProduto")));
+                importacao.setIdImportacao(rs.getInt("IdImport"));
                 }
             }
         } catch (SQLException ex) {
