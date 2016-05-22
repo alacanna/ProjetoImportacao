@@ -73,13 +73,13 @@ public class MovimentoEstoque {
         this.importacao = importacao;
     }
     
-    private Date data;
+    private String data;
 
-    public Date getData() {
+    public String getData() {
         return data;
     }
     
-    public void setData(Date data) {
+    public void setData(String data) {
         this.data = data;
     }
 }
