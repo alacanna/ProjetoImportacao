@@ -164,6 +164,9 @@
       </Layout>
       <SubComponents>
         <Component class="javax.swing.JTextField" name="txtQte">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+          </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtQteActionPerformed"/>
           </Events>
@@ -189,6 +192,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtProduto">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="btnPesquisar">
           <Properties>
@@ -204,6 +210,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtDtEnvio">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+          </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtDtEnvioActionPerformed"/>
           </Events>
@@ -222,6 +231,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Registrar"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btRegistrarActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
