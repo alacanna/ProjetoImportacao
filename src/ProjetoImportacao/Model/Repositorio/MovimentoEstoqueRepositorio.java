@@ -32,7 +32,7 @@ public class MovimentoEstoqueRepositorio implements IRepositorio<MovimentoEstoqu
             imp.setIdImportacao(0);
             item.setImportacao(imp);
         }
-        String sql = "INSERT INTO MovimentoEstoque(IdEstoque,TipoMovimentacao,Pais,Quantidade,Data,IdImportacao) VALUES (" + item.getEstoque().getIdEstoque() +",'" + item.getTipoMovimentacao() +"','" + item.getPais() +"'," + item.getQuantidade() +"','" + item.getData() +"'," + item.getImportacao().getIdImportacao()+ ")";
+        String sql = "INSERT INTO MovimentacaoEstoque(IdEstoque,TipoMovimentacao,Pais,Quantidade,Data,IdImportacao) VALUES (" + item.getEstoque().getIdEstoque() +",'" + item.getTipoMovimentacao() +"','" + item.getPais() +"','" + item.getQuantidade() +"','" + item.getData() +"'," + item.getImportacao().getIdImportacao()+ ")";
         pers.ExecutaComando(sql);
     }
     

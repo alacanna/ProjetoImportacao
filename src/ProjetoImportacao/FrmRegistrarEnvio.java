@@ -225,6 +225,9 @@ public class FrmRegistrarEnvio extends javax.swing.JInternalFrame {
 
     private void btRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRegistrarActionPerformed
         // TODO add your handling code here:
+        
+        if(txtQte.getText() != "" && txtQte.getText() != "0")
+        {
         Importacao importa = new Importacao();
         
         importa.setCodigoBarras(Integer.parseInt(txtCodBarras.getText()));
@@ -243,6 +246,7 @@ public class FrmRegistrarEnvio extends javax.swing.JInternalFrame {
         importa.setStatus("Enviado");
         
         rep.Salvar(importa);
+        }
     }//GEN-LAST:event_btRegistrarActionPerformed
 
 

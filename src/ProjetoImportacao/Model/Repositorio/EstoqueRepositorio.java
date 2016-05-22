@@ -17,7 +17,7 @@ import java.util.logging.Logger;
  *
  * @author VanessaCristine
  */
-public class EstoqueRepositorio implements IRepositorio<Estoque>{
+public class EstoqueRepositorio implements IRepositorio<Estoque> {
 
     private Persistencia pers = new Persistencia();
 
@@ -135,7 +135,7 @@ public class EstoqueRepositorio implements IRepositorio<Estoque>{
     }
 
     private void Alterar(Estoque item) {
-        String sql = "UPDATE ESTOQUE SET IdProduto ='" + item.getProduto().getIdProduto() + "',Quantidade='" + item.getQuantidade() + "' where IdEstoque=" + item.getIdEstoque();
+        String sql = "UPDATE ESTOQUE SET Quantidade=Quantidade + '" + item.getQuantidade() + "' where IdEstoque=" + item.getIdEstoque();
         pers.ExecutaComando(sql);
     }
 }

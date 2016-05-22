@@ -19,51 +19,50 @@ import java.util.logging.Logger;
  *
  * @author VanessaCristine
  */
-public class ImportacaoRepositorio implements IRepositorio<Importacao>{
+public class ImportacaoRepositorio implements IRepositorio<Importacao> {
 
     private Persistencia pers = new Persistencia();
-    
+
     @Override
     public void Salvar(Importacao item) {
-        
-        item.setDataRecebimento(item.getDataEnvio());
-        
-        String sql = "INSERT INTO Importacao(IdProduto,DtEnvio,DtRecebimento,Quantidade,CodBarras,Status) VALUES (" + item.getProduto().getIdProduto()+",'" + item.getDataEnvio()+"','" + item.getDataRecebimento()+"','" + item.getQuantidade() +"','" + item.getCodigoBarras()+"','" + item.getStatus() + "')";
+
+        String sql = "INSERT INTO Importacao(IdProduto,DtEnvio,DtRecebimento,Quantidade,CodBarras,Status) VALUES (" + item.getProduto().getIdProduto() + ",'" + item.getDataEnvio() + "','" + item.getDataRecebimento() + "','" + item.getQuantidade() + "','" + item.getCodigoBarras() + "','" + item.getStatus() + "')";
         pers.ExecutaComando(sql);
-        
-        ResultSet rs =  pers.ExecutaLista("SELECT IdImport from Importacao where CodBarras = '" + +item.getCodigoBarras()+"'");
+
+        ResultSet rs = pers.ExecutaLista("SELECT IdImport from Importacao where CodBarras = '" + +item.getCodigoBarras() + "'");
 
         try {
-            if(rs.next())
-                item.setIdImportacao(rs.getInt("IdImportacao"));
+            if (rs.next()) {
+                item.setIdImportacao(rs.getInt("IdImport"));
+            }
         } catch (SQLException ex) {
             Logger.getLogger(ImportacaoRepositorio.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         MovimentoEstoqueRepositorio repMov = new MovimentoEstoqueRepositorio();
-        
+        EstoqueRepositorio repEstoque = new EstoqueRepositorio();
         MovimentoEstoque movEstoque = new MovimentoEstoque();
-        
+
         movEstoque.setData(new Date());
-        movEstoque.setPais("CHILE");
+        movEstoque.setPais("Chile");
         movEstoque.setQuantidade(item.getQuantidade());
-        movEstoque.setTipoMovimentacao("Saida");
+        movEstoque.setTipoMovimentacao("Saída");
         movEstoque.setImportacao(item);
-        
+        movEstoque.setEstoque(repEstoque.CarregarEstoquePorProduto(item.getProduto().getIdProduto()));
         repMov.Salvar(movEstoque);
     }
-    
+
     @Override
     public List<Importacao> Listar(String[] params) {
-        
+
         ResultSet rs = pers.ExecutaLista("SELECT * FROM Importacao Order by dataEnvio");
-        
-        List<Importacao>  importacoes = new ArrayList<>();
+
+        List<Importacao> importacoes = new ArrayList<>();
         Importacao importacao;
-        
+
         try {
             while (rs.next()) {
-                
+
                 importacao = new Importacao();
                 importacao.setCodigoBarras(rs.getInt("CodBarras"));
                 importacao.setQuantidade(rs.getInt("Quantidade"));
@@ -75,55 +74,51 @@ public class ImportacaoRepositorio implements IRepositorio<Importacao>{
             }
         } catch (SQLException ex) {
             Logger.getLogger(ImportacaoRepositorio.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        finally
-        {
+        } finally {
             try {
                 rs.close();
             } catch (SQLException ex) {
                 Logger.getLogger(ImportacaoRepositorio.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        
+
         return importacoes;
     }
 
     @Override
     public Importacao Carregar(int codigo) {
-       String sql = "SELECT * FROM MovimentacaoEstoque where IdMov=" + codigo; 
+        String sql = "SELECT * FROM MovimentacaoEstoque where IdMov=" + codigo;
         Importacao importacao = new Importacao();
-       ResultSet rs = pers.ExecutaLista(sql);
-       try 
-       {
-      
-       if(rs != null)
-       {
-          importacao.setCodigoBarras(rs.getInt("CodBarras"));
-          importacao.setQuantidade(rs.getInt("Quantidade"));
-          importacao.setDataRecebimento(rs.getDate("DtRecebimento"));
-          importacao.setStatus(rs.getString("Status"));
-          importacao.setDataEnvio(rs.getDate("DtEnvio"));
-          importacao.setProduto(new ProdutoRepositorio().Carregar(rs.getInt("IdProduto")));
-       }
-       }
-       catch (SQLException ex) {
-            Logger.getLogger(ProdutoRepositorio.class.getName()).log(Level.SEVERE, null, ex);
-        }
-       finally{
-           try {
-               rs.close();
-           } catch (SQLException ex) {
-               Logger.getLogger(ProdutoRepositorio.class.getName()).log(Level.SEVERE, null, ex);
-           }
-        } 
+        ResultSet rs = pers.ExecutaLista(sql);
+        try {
 
-       return importacao;
-       
+            if (rs != null) {
+                if (rs.next()) {
+                    importacao.setCodigoBarras(rs.getInt("CodBarras"));
+                    importacao.setQuantidade(rs.getInt("Quantidade"));
+                    importacao.setDataRecebimento(rs.getDate("DtRecebimento"));
+                    importacao.setStatus(rs.getString("Status"));
+                    importacao.setDataEnvio(rs.getDate("DtEnvio"));
+                    importacao.setProduto(new ProdutoRepositorio().Carregar(rs.getInt("IdProduto")));
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ProdutoRepositorio.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                rs.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(ProdutoRepositorio.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+        return importacao;
+
     }
 
     @Override
     public void Remover(Importacao item) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
 }
