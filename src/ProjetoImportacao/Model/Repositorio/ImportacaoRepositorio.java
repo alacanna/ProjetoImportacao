@@ -118,6 +118,36 @@ public class ImportacaoRepositorio implements IRepositorio<Importacao> {
 
     }
 
+    public Importacao CarregarPeloCodigoDeBarras(int codigoBarras) {
+        String sql = "SELECT * FROM MovimentacaoEstoque where CodBarras=" + codigoBarras;
+        Importacao importacao = new Importacao();
+        ResultSet rs = pers.ExecutaLista(sql);
+        try {
+
+            if (rs != null) {
+                if (rs.next()) {
+                    importacao.setCodigoBarras(rs.getInt("CodBarras"));
+                    importacao.setQuantidade(rs.getInt("Quantidade"));
+                    importacao.setDataRecebimento(rs.getDate("DtRecebimento"));
+                    importacao.setStatus(rs.getString("Status"));
+                    importacao.setDataEnvio(rs.getDate("DtEnvio"));
+                    importacao.setProduto(new ProdutoRepositorio().Carregar(rs.getInt("IdProduto")));
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ProdutoRepositorio.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                rs.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(ProdutoRepositorio.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+        return importacao;
+
+    }
+    
     @Override
     public void Remover(Importacao item) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
