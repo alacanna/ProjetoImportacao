@@ -45,6 +45,7 @@ public class EstoqueRepositorio implements IRepositorio<Estoque> {
                 estoque = new Estoque();
                 estoque.setIdEstoque(rs.getInt("IdEstoque"));
                 estoque.setQuantidade(rs.getInt("Quantidade"));
+                estoque.setPais(rs.getString("Pais"));
                 //Seleciona o produto
                 ProdutoRepositorio produtoRepositorio = new ProdutoRepositorio();
                 estoque.setProduto(produtoRepositorio.Carregar(rs.getInt("IdProduto")));
@@ -76,6 +77,7 @@ public class EstoqueRepositorio implements IRepositorio<Estoque> {
                     estoque = new Estoque();
                     estoque.setIdEstoque(rs.getInt("IdEstoque"));
                     estoque.setQuantidade(rs.getInt("Quantidade"));
+                    estoque.setPais(rs.getString("Pais"));
                     //Seleciona o produto
                     ProdutoRepositorio produtoRepositorio = new ProdutoRepositorio();
                     estoque.setProduto(produtoRepositorio.Carregar(rs.getInt("IdProduto")));
@@ -104,6 +106,7 @@ public class EstoqueRepositorio implements IRepositorio<Estoque> {
                     estoque = new Estoque();
                     estoque.setIdEstoque(rs.getInt("IdEstoque"));
                     estoque.setQuantidade(rs.getInt("Quantidade"));
+                    estoque.setPais(rs.getString("Pais"));
                     //Seleciona o produto
                     ProdutoRepositorio produtoRepositorio = new ProdutoRepositorio();
                     estoque.setProduto(produtoRepositorio.Carregar(rs.getInt("IdProduto")));
@@ -128,7 +131,7 @@ public class EstoqueRepositorio implements IRepositorio<Estoque> {
     }
 
     private void Incluir(Estoque item) {
-        String sql = "INSERT INTO ESTOQUE(IdProduto,Quantidade) VALUES ('" + item.getProduto().getIdProduto() + "','" + item.getQuantidade() + "' )";
+        String sql = "INSERT INTO ESTOQUE(IdProduto,Quantidade,Pais) VALUES ('" + item.getProduto().getIdProduto() + "','" + item.getQuantidade() + "','" + item.getPais()+ "')";
         pers.ExecutaComando(sql);
     }
 

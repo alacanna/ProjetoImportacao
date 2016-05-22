@@ -39,6 +39,7 @@ public class MovimentoEstoqueRepositorio implements IRepositorio<MovimentoEstoqu
         Estoque estoque = new Estoque();
         estoque.setIdEstoque(item.getEstoque().getIdEstoque());
         estoque.setProduto(item.getEstoque().getProduto());
+        estoque.setPais(item.getPais());
         
         switch(item.getTipoMovimentacao().toUpperCase())
         {

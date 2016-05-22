@@ -48,7 +48,7 @@ public class ImportacaoRepositorio implements IRepositorio<Importacao> {
         MovimentoEstoque movEstoque = new MovimentoEstoque();
 
         movEstoque.setData(Util.sdf.format(new Date()));
-        movEstoque.setPais("Chile");
+        movEstoque.setPais("CHL");
         movEstoque.setQuantidade(item.getQuantidade());
         movEstoque.setTipoMovimentacao("Saída");
         movEstoque.setImportacao(item);
