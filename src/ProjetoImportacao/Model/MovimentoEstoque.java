@@ -5,6 +5,8 @@
  */
 package ProjetoImportacao.Model;
 
+import java.util.Date;
+
 /**
  *
  * @author VanessaCristine
@@ -15,6 +17,10 @@ public class MovimentoEstoque {
 
     public int getIdMovimentoEstoque() {
         return idMovimentoEstoque;
+    }
+     public void setIdMovimentoEstoque(int idMovimentoEstoque)
+     {
+        this.idMovimentoEstoque = idMovimentoEstoque;
     }
     
     private Estoque estoque;
@@ -65,5 +71,15 @@ public class MovimentoEstoque {
     
     public void setImportacao(Importacao importacao) {
         this.importacao = importacao;
+    }
+    
+    private Date data;
+
+    public Date getData() {
+        return data;
+    }
+    
+    public void setData(Date data) {
+        this.data = data;
     }
 }

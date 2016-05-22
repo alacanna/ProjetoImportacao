@@ -19,6 +19,10 @@ public class Importacao {
         return idImportacao;
     }
     
+    public void setIdImportacao(int idImportacao) {
+        this.idImportacao = idImportacao;
+    }
+
     private Date dataEnvio;
 
     public Date getDataEnvio() {
