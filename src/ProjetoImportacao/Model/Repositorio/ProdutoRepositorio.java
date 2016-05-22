@@ -78,11 +78,14 @@ public class ProdutoRepositorio implements IRepositorio<Produto>{
       
        if(rs != null)
        {
+           if(rs.next())
+           {
               produto.setCategoria(rs.getString("Categoria"));
               produto.setIdProduto(rs.getInt("IdProduto"));
               produto.setPreco(rs.getDouble("Preco"));
               produto.setNome(rs.getString("Nome"));
               produto.setUniMedida(rs.getString("UniMedida"));
+           }
        }
        }
        catch (SQLException ex) {

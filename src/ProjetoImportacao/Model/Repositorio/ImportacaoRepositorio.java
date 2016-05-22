@@ -26,13 +26,16 @@ public class ImportacaoRepositorio implements IRepositorio<Importacao>{
     @Override
     public void Salvar(Importacao item) {
         
-        String sql = "INSERT INTO Importacao(IdProduto,DtEnvio,DtRecebimento,Quantidade,CodBarras,Status) VALUES (" + item.getProduto().getIdProduto()+",'" + item.getDataEnvio()+"','" + item.getDataRecebimento()+"'," + item.getQuantidade() +"','" + item.getCodigoBarras()+"','" + item.getStatus() + "')";
+        item.setDataRecebimento(item.getDataEnvio());
+        
+        String sql = "INSERT INTO Importacao(IdProduto,DtEnvio,DtRecebimento,Quantidade,CodBarras,Status) VALUES (" + item.getProduto().getIdProduto()+",'" + item.getDataEnvio()+"','" + item.getDataRecebimento()+"','" + item.getQuantidade() +"','" + item.getCodigoBarras()+"','" + item.getStatus() + "')";
         pers.ExecutaComando(sql);
         
-        ResultSet rs =  pers.ExecutaLista("SELECT @@Identity as Id");
-                
+        ResultSet rs =  pers.ExecutaLista("SELECT IdImport from Importacao where CodBarras = '" + +item.getCodigoBarras()+"'");
+
         try {
-            item.setIdImportacao(rs.getInt("Id"));
+            if(rs.next())
+                item.setIdImportacao(rs.getInt("IdImportacao"));
         } catch (SQLException ex) {
             Logger.getLogger(ImportacaoRepositorio.class.getName()).log(Level.SEVERE, null, ex);
         }
