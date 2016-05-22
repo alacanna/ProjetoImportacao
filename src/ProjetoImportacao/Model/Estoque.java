@@ -17,6 +17,10 @@ public class Estoque {
         return idEstoque;
     }
     
+    public void setIdEstoque(int idEstoque){
+        this.idEstoque = idEstoque;
+    }
+    
     private Produto produto;
 
     public Produto getProduto() {
