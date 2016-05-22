@@ -5,6 +5,12 @@
  */
 package ProjetoImportacao;
 
+import ProjetoImportacao.Model.DisplayValueModel;
+import ProjetoImportacao.Model.Produto;
+import ProjetoImportacao.Model.Repositorio.ProdutoRepositorio;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author VanessaCristine
@@ -15,12 +21,21 @@ public class FrmRegistrarEnvio extends javax.swing.JInternalFrame {
      * Creates new form FrmRegistrarEnvio
      */
     public FrmRegistrarEnvio() {
-        CarregarProduto();
         initComponents();
+        CarregarProduto();
     }
 
     public void CarregarProduto()
     {
+       ProdutoRepositorio rep = new ProdutoRepositorio();
+       
+        List<Produto> produtos =  rep.Listar(null);
+        
+        // DisplayValueModel cb = null;
+        // ArrayList<DisplayValueModel> lst=new ArrayList<DisplayValueModel>();
+        produtos.stream().forEach((p) -> {
+            cmbProduto.addItem(p);
+        });
     }
     
     /**
@@ -188,7 +203,7 @@ public class FrmRegistrarEnvio extends javax.swing.JInternalFrame {
     private javax.swing.JPanel PProduto;
     private javax.swing.JButton btRegistrar;
     private javax.swing.JButton btnLimpar;
-    private javax.swing.JComboBox<String> cmbProduto;
+    private javax.swing.JComboBox<Produto> cmbProduto;
     private javax.swing.JLabel lblCodBarras;
     private javax.swing.JLabel lblProduto;
     private javax.swing.JLabel lblQte;

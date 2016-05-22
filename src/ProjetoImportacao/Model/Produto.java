@@ -69,4 +69,10 @@ public class Produto {
     public void setCodigoBarras(String codigoBarras) {
         this.codigoBarras = codigoBarras;
     }
+    
+    @Override
+    public String toString()
+    {
+        return getNome().toString();
+    }
 }

@@ -14,7 +14,8 @@ public class FrmRegistrarRecebimento extends javax.swing.JInternalFrame {
     /**
      * Creates new form FrmRegistrarRecebimento
      */
-    public FrmRegistrarRecebimento() {
+    public FrmRegistrarRecebimento() 
+    {
         initComponents();
     }
 
