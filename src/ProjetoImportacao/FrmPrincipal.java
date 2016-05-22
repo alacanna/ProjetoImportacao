@@ -34,10 +34,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
         Importacao = new javax.swing.JMenu();
         EnvioMenuItem = new javax.swing.JMenuItem();
         RecebimentoMenuItem = new javax.swing.JMenuItem();
+        RastreamentoMenuItem = new javax.swing.JMenuItem();
         Estoque = new javax.swing.JMenu();
         MovEstoqueMenuItem = new javax.swing.JMenuItem();
         RelatorioMenuItem = new javax.swing.JMenuItem();
-        RastreamentoMenuItem = new javax.swing.JMenuItem();
+        MovEstoqueMenuItem1 = new javax.swing.JMenuItem();
         Sobre = new javax.swing.JMenu();
         Sair = new javax.swing.JMenu();
 
@@ -104,6 +105,15 @@ public class FrmPrincipal extends javax.swing.JFrame {
         });
         Importacao.add(RecebimentoMenuItem);
 
+        RastreamentoMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_MASK));
+        RastreamentoMenuItem.setText("Rastreamento");
+        RastreamentoMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RastreamentoMenuItemActionPerformed(evt);
+            }
+        });
+        Importacao.add(RastreamentoMenuItem);
+
         menuBar.add(Importacao);
 
         Estoque.setText("Estoque");
@@ -126,14 +136,15 @@ public class FrmPrincipal extends javax.swing.JFrame {
         });
         Estoque.add(RelatorioMenuItem);
 
-        RastreamentoMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_MASK));
-        RastreamentoMenuItem.setText("Rastreamento");
-        RastreamentoMenuItem.addActionListener(new java.awt.event.ActionListener() {
+        MovEstoqueMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_H, java.awt.event.InputEvent.CTRL_MASK));
+        MovEstoqueMenuItem1.setText("Histório Movimentação");
+        MovEstoqueMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                RastreamentoMenuItemActionPerformed(evt);
+                MovEstoqueMenuItem1ActionPerformed(evt);
             }
         });
-        Estoque.add(RastreamentoMenuItem);
+        Estoque.add(MovEstoqueMenuItem1);
+        MovEstoqueMenuItem1.getAccessibleContext().setAccessibleName("Histórico Movimentação");
 
         menuBar.add(Estoque);
 
@@ -176,90 +187,101 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void RecebimentoMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RecebimentoMenuItemActionPerformed
-RemoveTela();        
+        RemoveTela();
 //Nome da Classe do Formulário
         FrmRegistrarRecebimento FrmRegistrarRecebimento = new FrmRegistrarRecebimento();
-                
+
         //Abre Formulário na Página
         Desktop.add(FrmRegistrarRecebimento);
         FrmRegistrarRecebimento.setVisible(true);
     }//GEN-LAST:event_RecebimentoMenuItemActionPerformed
 
     private void SairMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SairMouseClicked
-            System.exit(0);
+        System.exit(0);
     }//GEN-LAST:event_SairMouseClicked
 
     private void EnvioMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EnvioMenuItemActionPerformed
-RemoveTela();
+        RemoveTela();
         //Nome da Classe do Formulário
         FrmRegistrarEnvio FrmRegistrarEnvio = new FrmRegistrarEnvio();
-                
+
         //Abre Formulário na Página
         Desktop.add(FrmRegistrarEnvio);
         FrmRegistrarEnvio.setVisible(true);
     }//GEN-LAST:event_EnvioMenuItemActionPerformed
 
     private void CadastraProdutosMenuItemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CadastraProdutosMenuItemMouseClicked
-        
+
     }//GEN-LAST:event_CadastraProdutosMenuItemMouseClicked
 
     private void CadastraProdutosMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CadastraProdutosMenuItemActionPerformed
-RemoveTela();        
+        RemoveTela();
 //Nome da Classe do Formulário
         FrmCadastrarProduto FrmCadastrarProduto = new FrmCadastrarProduto();
-                
+
         //Abre Formulário na Página
         Desktop.add(FrmCadastrarProduto);
         FrmCadastrarProduto.setVisible(true);
     }//GEN-LAST:event_CadastraProdutosMenuItemActionPerformed
 
     private void MovEstoqueMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MovEstoqueMenuItemActionPerformed
-    RemoveTela();
+        RemoveTela();
         //Nome da Classe do Formulário
         FrmRegistrarMovimentacao FrmRegistrarMovimentacao = new FrmRegistrarMovimentacao();
-        
+
         //Abre Formulário na Página
         Desktop.add(FrmRegistrarMovimentacao);
         FrmRegistrarMovimentacao.setVisible(true);
     }//GEN-LAST:event_MovEstoqueMenuItemActionPerformed
 
     private void RelatorioMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RelatorioMenuItemActionPerformed
-    RemoveTela();
+        RemoveTela();
 //Nome da Classe do Formulário
         FrmRelatorio FrmRelatorio = new FrmRelatorio();
-                
+
         //Abre Formulário na Página
         Desktop.add(FrmRelatorio);
-        FrmRelatorio.setVisible(true);    
+        FrmRelatorio.setVisible(true);
     }//GEN-LAST:event_RelatorioMenuItemActionPerformed
 
     private void SobreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SobreActionPerformed
-     
+
     }//GEN-LAST:event_SobreActionPerformed
 
     private void SobreMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SobreMouseClicked
-    RemoveTela();
+        RemoveTela();
         //Nome da Classe do Formulário
         FrmSobre FrmSobre = new FrmSobre();
-                
+
         //Abre Formulário na Página
         Desktop.add(FrmSobre);
-        FrmSobre.setVisible(true);    
+        FrmSobre.setVisible(true);
     }//GEN-LAST:event_SobreMouseClicked
 
     private void RastreamentoMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RastreamentoMenuItemActionPerformed
-    RemoveTela();
+        RemoveTela();
         //Nome da Classe do Formulário
         FrmRastreamento FrmRastreamento = new FrmRastreamento();
-                
+
         //Abre Formulário na Página
         Desktop.add(FrmRastreamento);
-        FrmRastreamento.setVisible(true);         
+        FrmRastreamento.setVisible(true);
     }//GEN-LAST:event_RastreamentoMenuItemActionPerformed
-    public void RemoveTela()
-    {
-        Desktop.removeAll();        
+
+    private void MovEstoqueMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MovEstoqueMenuItem1ActionPerformed
+        // TODO add your handling code here:
+        RemoveTela();
+        //Nome da Classe do Formulário
+        FrmHistoricoMovimentacao frmHistoricoMovimentacao = new FrmHistoricoMovimentacao();
+
+        //Abre Formulário na Página
+        Desktop.add(frmHistoricoMovimentacao);
+        frmHistoricoMovimentacao.setVisible(true);
+    }//GEN-LAST:event_MovEstoqueMenuItem1ActionPerformed
+    public void RemoveTela() {
+        Desktop.removeAll();
     }
+
     /**
      * @param args the command line arguments
      */
@@ -306,6 +328,7 @@ RemoveTela();
     private javax.swing.JMenu Estoque;
     private javax.swing.JMenu Importacao;
     private javax.swing.JMenuItem MovEstoqueMenuItem;
+    private javax.swing.JMenuItem MovEstoqueMenuItem1;
     private javax.swing.JMenuItem RastreamentoMenuItem;
     private javax.swing.JMenuItem RecebimentoMenuItem;
     private javax.swing.JMenuItem RelatorioMenuItem;

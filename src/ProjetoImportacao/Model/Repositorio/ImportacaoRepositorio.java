@@ -61,6 +61,8 @@ public class ImportacaoRepositorio implements IRepositorio<Importacao> {
     public boolean Alterar(Importacao item) {
        
         if (item.getStatus().equalsIgnoreCase("Enviado")) {
+            
+            item.setStatus("Recebido");
             String sql = "UPDATE Importacao SET Status= '" + item.getStatus() + "' where CodBarras=" + item.getCodigoBarras();
             System.out.println("Query " + sql);
             pers.ExecutaComando(sql);

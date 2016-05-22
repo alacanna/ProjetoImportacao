@@ -80,7 +80,7 @@ public class FrmRegistrarRecebimento extends javax.swing.JInternalFrame {
 
         txtProduto.setEditable(false);
 
-        btnPesquisar.setText("Pesquisar");
+        btnPesquisar.setText("Buscar");
         btnPesquisar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnPesquisarActionPerformed(evt);
@@ -100,36 +100,31 @@ public class FrmRegistrarRecebimento extends javax.swing.JInternalFrame {
         PProduto.setLayout(PProdutoLayout);
         PProdutoLayout.setHorizontalGroup(
             PProdutoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PProdutoLayout.createSequentialGroup()
+            .addGroup(PProdutoLayout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addComponent(lblCodBarras)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtCodBarras, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(PProdutoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(PProdutoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblProduto)
+                    .addComponent(txtProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(PProdutoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(PProdutoLayout.createSequentialGroup()
-                        .addGap(16, 16, 16)
-                        .addComponent(lblCodBarras)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblDtEnvio)
+                        .addGap(48, 48, 48))
+                    .addGroup(PProdutoLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtCodBarras))
-                    .addGroup(PProdutoLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(PProdutoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblProduto)
-                            .addComponent(txtProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(PProdutoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(PProdutoLayout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(lblDtEnvio)
-                                .addGap(126, 126, 126))
-                            .addGroup(PProdutoLayout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(txtDtEnvio)))))
+                        .addComponent(txtDtEnvio, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGroup(PProdutoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(PProdutoLayout.createSequentialGroup()
-                        .addGap(9, 9, 9)
-                        .addComponent(btnPesquisar))
-                    .addGroup(PProdutoLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(PProdutoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblQte)
-                            .addComponent(txtQte, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(7, 7, 7))
+                    .addComponent(lblQte)
+                    .addComponent(txtQte, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(97, 97, 97))
         );
         PProdutoLayout.setVerticalGroup(
             PProdutoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -144,16 +139,17 @@ public class FrmRegistrarRecebimento extends javax.swing.JInternalFrame {
                     .addGroup(PProdutoLayout.createSequentialGroup()
                         .addComponent(lblProduto)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(PProdutoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtDtEnvio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(PProdutoLayout.createSequentialGroup()
                         .addComponent(lblQte)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtQte, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(PProdutoLayout.createSequentialGroup()
                         .addComponent(lblDtEnvio)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtDtEnvio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(79, Short.MAX_VALUE))
+                        .addGap(26, 26, 26)))
+                .addContainerGap(42, Short.MAX_VALUE))
         );
 
         btnLimpar.setText("Limpar");
@@ -175,16 +171,16 @@ public class FrmRegistrarRecebimento extends javax.swing.JInternalFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(166, 166, 166)
+                .addGap(162, 162, 162)
                 .addComponent(btRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnLimpar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(PProduto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblTituloPagina, javax.swing.GroupLayout.PREFERRED_SIZE, 523, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(PProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 502, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblTituloPagina, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -193,11 +189,11 @@ public class FrmRegistrarRecebimento extends javax.swing.JInternalFrame {
                 .addComponent(lblTituloPagina, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(PProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btRegistrar)
-                    .addComponent(btnLimpar))
-                .addContainerGap(51, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnLimpar)
+                    .addComponent(btRegistrar))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
 
         pack();
@@ -221,6 +217,8 @@ public class FrmRegistrarRecebimento extends javax.swing.JInternalFrame {
 
     private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
 
+        try
+        {
         if (!"".equals(txtCodBarras.getText())) {
             int codBarras = Integer.parseInt(txtCodBarras.getText());
 
@@ -238,6 +236,9 @@ public class FrmRegistrarRecebimento extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, "Digite um código de barras para realizar a pesquisa");
             Limpar();
         }
+        }catch (NumberFormatException exception) {
+            JOptionPane.showMessageDialog(null, "Por favor digite uma cod. barras válido!");
+        }
     }//GEN-LAST:event_btnPesquisarActionPerformed
 
     private void btRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRegistrarActionPerformed
@@ -246,7 +247,6 @@ public class FrmRegistrarRecebimento extends javax.swing.JInternalFrame {
         int reply = JOptionPane.showConfirmDialog(null, menssagem, titulo, JOptionPane.YES_NO_OPTION);
         if (reply == JOptionPane.YES_OPTION) {
             ImportacaoRepositorio importacaoRepositorio = new ImportacaoRepositorio();
-            importacao.setStatus("Recebido");
 
             boolean alterou = importacaoRepositorio.Alterar(importacao);
             if (alterou) {

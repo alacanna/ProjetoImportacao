@@ -215,8 +215,7 @@ public class FrmRegistrarEnvio extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtCodBarrasActionPerformed
 
     private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
-        txtQte.setText("");
-        txtCodBarras.setText("");
+        Limpar();
     }//GEN-LAST:event_btnLimparActionPerformed
 
     private void btRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRegistrarActionPerformed
@@ -238,14 +237,19 @@ public class FrmRegistrarEnvio extends javax.swing.JInternalFrame {
 
                 rep.Salvar(importa);
 
-                JOptionPane.showMessageDialog(null, "Movimentação realizada com sucesso!");
+                JOptionPane.showMessageDialog(null, "Envio realizado com sucesso!");
+                Limpar();
             }
         } catch (NumberFormatException exception) {
             JOptionPane.showMessageDialog(null, "Por favor digite uma quantidade válida!");
         }
     }//GEN-LAST:event_btRegistrarActionPerformed
-
-
+    public void Limpar() {
+        txtQte.setText("");
+        txtCodBarras.setText("");
+        GerarCodigoBarras();
+        cmbProduto.setSelectedIndex(0);
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel PProduto;
     private javax.swing.JButton btRegistrar;
