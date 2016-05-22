@@ -5,11 +5,8 @@
  */
 package ProjetoImportacao;
 
-import ProjetoImportacao.Model.DisplayValueModel;
 import ProjetoImportacao.Model.Produto;
 import ProjetoImportacao.Model.Repositorio.ProdutoRepositorio;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  *
@@ -22,20 +19,8 @@ public class FrmRegistrarEnvio extends javax.swing.JInternalFrame {
      */
     public FrmRegistrarEnvio() {
         initComponents();
-        CarregarProduto();
+        Util.carregarProduto(cmbProduto, new ProdutoRepositorio());
     }
-
-    public void CarregarProduto()
-    {
-       ProdutoRepositorio rep = new ProdutoRepositorio();
-       
-        List<Produto> produtos =  rep.Listar(null);
-        
-        produtos.stream().forEach((p) -> {
-            cmbProduto.addItem(p);
-        });
-    }
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
