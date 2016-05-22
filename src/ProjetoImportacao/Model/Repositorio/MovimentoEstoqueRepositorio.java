@@ -25,16 +25,7 @@ public class MovimentoEstoqueRepositorio implements IRepositorio<MovimentoEstoqu
     
     @Override
     public void Salvar(MovimentoEstoque item) {
-        
-        if(item.getImportacao() == null)
-        {
-            Importacao imp = new Importacao();
-            imp.setIdImportacao(0);
-            item.setImportacao(imp);
-        }
-        String sql = "INSERT INTO MovimentacaoEstoque(IdEstoque,TipoMovimentacao,Pais,Quantidade,Data,IdImportacao) VALUES (" + item.getEstoque().getIdEstoque() +",'" + item.getTipoMovimentacao() +"','" + item.getPais() +"','" + item.getQuantidade() +"','" + item.getData() +"'," + item.getImportacao().getIdImportacao()+ ")";
-        pers.ExecutaComando(sql);
-        
+         
         EstoqueRepositorio repEstoque = new EstoqueRepositorio();
         Estoque estoque = new Estoque();
         estoque.setIdEstoque(item.getEstoque().getIdEstoque());
@@ -52,6 +43,18 @@ public class MovimentoEstoqueRepositorio implements IRepositorio<MovimentoEstoqu
                 break;
         }
         repEstoque.Salvar(estoque);
+        
+        estoque = repEstoque.CarregarEstoquePorProduto(item.getEstoque().getProduto().getIdProduto(), item.getPais());
+        item.setEstoque(estoque);
+        
+         if(item.getImportacao() == null)
+        {
+            Importacao imp = new Importacao();
+            imp.setIdImportacao(0);
+            item.setImportacao(imp);
+        }
+        String sql = "INSERT INTO MovimentacaoEstoque(IdEstoque,TipoMovimentacao,Pais,Quantidade,Data,IdImportacao) VALUES (" + item.getEstoque().getIdEstoque() +",'" + item.getTipoMovimentacao() +"','" + item.getPais() +"','" + item.getQuantidade() +"','" + item.getData() +"'," + item.getImportacao().getIdImportacao()+ ")";
+        pers.ExecutaComando(sql);
     }
     
     

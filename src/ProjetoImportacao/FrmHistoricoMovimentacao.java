@@ -5,9 +5,7 @@
  */
 package ProjetoImportacao;
 
-import ProjetoImportacao.Model.Estoque;
 import ProjetoImportacao.Model.MovimentoEstoque;
-import ProjetoImportacao.Model.Repositorio.EstoqueRepositorio;
 import ProjetoImportacao.Model.Repositorio.MovimentoEstoqueRepositorio;
 import java.util.List;
 import java.util.stream.Collectors;
