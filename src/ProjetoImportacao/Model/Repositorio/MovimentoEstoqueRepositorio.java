@@ -34,7 +34,25 @@ public class MovimentoEstoqueRepositorio implements IRepositorio<MovimentoEstoqu
         }
         String sql = "INSERT INTO MovimentacaoEstoque(IdEstoque,TipoMovimentacao,Pais,Quantidade,Data,IdImportacao) VALUES (" + item.getEstoque().getIdEstoque() +",'" + item.getTipoMovimentacao() +"','" + item.getPais() +"','" + item.getQuantidade() +"','" + item.getData() +"'," + item.getImportacao().getIdImportacao()+ ")";
         pers.ExecutaComando(sql);
+        
+        EstoqueRepositorio repEstoque = new EstoqueRepositorio();
+        Estoque estoque = new Estoque();
+        estoque.setIdEstoque(item.getEstoque().getIdEstoque());
+        estoque.setProduto(item.getEstoque().getProduto());
+        
+        switch(item.getTipoMovimentacao().toUpperCase())
+        {
+            case "ENTRADA":
+                estoque.setQuantidade(item.getQuantidade());
+                break;
+            case "SAÍDA":
+            case "PERDA":
+                estoque.setQuantidade(-item.getQuantidade());
+                break;
+        }
+        repEstoque.Salvar(estoque);
     }
+    
     
     @Override
     public List<MovimentoEstoque> Listar(String[] params) {

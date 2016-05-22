@@ -6,13 +6,16 @@
 package ProjetoImportacao;
 
 import ProjetoImportacao.Model.Estoque;
+import ProjetoImportacao.Model.MovimentoEstoque;
 import ProjetoImportacao.Model.Produto;
 import ProjetoImportacao.Model.Repositorio.EstoqueRepositorio;
+import ProjetoImportacao.Model.Repositorio.MovimentoEstoqueRepositorio;
 import ProjetoImportacao.Model.Repositorio.ProdutoRepositorio;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.Date;
 import javax.swing.JOptionPane;
 
 /**
@@ -26,10 +29,14 @@ public class FrmRegistrarMovimentacao extends javax.swing.JInternalFrame {
      */
     public FrmRegistrarMovimentacao() {
         initComponents();
+        CarregarTela();
+    }
+    
+    public void CarregarTela()
+    {
         preencheView();
         Util.carregarProduto(cmbProduto, new ProdutoRepositorio());
     }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -86,7 +93,7 @@ public class FrmRegistrarMovimentacao extends javax.swing.JInternalFrame {
 
         jLabel1.setText("País:");
 
-        cmbPais.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Brasil", "Chile" }));
+        cmbPais.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Chile" }));
         cmbPais.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         cmbPais.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -215,13 +222,32 @@ public class FrmRegistrarMovimentacao extends javax.swing.JInternalFrame {
         try {
             quantidade = Integer.parseInt(txtQte.getText());
             // TODO add your handling code here:
-            Estoque estoque = new Estoque();
-            estoque.setQuantidade(Integer.parseInt(txtQte.getText()));
-            estoque.setProduto((Produto) cmbProduto.getSelectedItem());
-
+           
+            Produto p = (Produto) cmbProduto.getSelectedItem();
+            
             EstoqueRepositorio rep = new EstoqueRepositorio();
-            rep.Salvar(estoque);
+            Estoque estoque = rep.CarregarEstoquePorProduto(p.getIdProduto());
+            
+            if(estoque == null)
+            {
+                estoque = new Estoque();
+                estoque.setProduto(p);
+                estoque.setQuantidade(quantidade);
+            }
+            
+            MovimentoEstoqueRepositorio repMov = new MovimentoEstoqueRepositorio();
+            
+            MovimentoEstoque movimento = new MovimentoEstoque();
+            movimento.setData(new Date());
+            movimento.setEstoque(estoque);
+            movimento.setPais("Chile");
+            movimento.setQuantidade(quantidade);
+            movimento.setTipoMovimentacao((String)cmbTipoMov.getSelectedItem());
+            repMov.Salvar(movimento);
+            
             Limpar();
+            CarregarTela();
+
             JOptionPane.showMessageDialog(null, "Movimentação realizada com sucesso!");
         } catch (NumberFormatException exception) {
             JOptionPane.showMessageDialog(null, "Por favor digite uma quantidade válida!");
