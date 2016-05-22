@@ -16,6 +16,7 @@ import javax.swing.JOptionPane;
 public class FrmRegistrarRecebimento extends javax.swing.JInternalFrame {
 
     private Importacao importacao;
+
     /**
      * Creates new form FrmRegistrarRecebimento
      */
@@ -226,7 +227,7 @@ public class FrmRegistrarRecebimento extends javax.swing.JInternalFrame {
             ImportacaoRepositorio rep = new ImportacaoRepositorio();
             importacao = rep.CarregarPeloCodigoDeBarras(codBarras);
 
-            if (importacao != null) {
+            if (importacao.getDataEnvio() != null) {
                 txtDtEnvio.setText(String.valueOf(importacao.getDataEnvio()));
                 txtProduto.setText(String.valueOf(importacao.getProduto().getNome()));
                 txtQte.setText(String.valueOf(importacao.getQuantidade()));
@@ -244,12 +245,14 @@ public class FrmRegistrarRecebimento extends javax.swing.JInternalFrame {
         String titulo = "Atenção";
         int reply = JOptionPane.showConfirmDialog(null, menssagem, titulo, JOptionPane.YES_NO_OPTION);
         if (reply == JOptionPane.YES_OPTION) {
-             ImportacaoRepositorio importacaoRepositorio = new ImportacaoRepositorio();
-             importacao.setStatus("Recebido");
-            
-             importacaoRepositorio.Salvar(importacao);
-             JOptionPane.showMessageDialog(null, "Recebimento salvo com sucesso!");
+            ImportacaoRepositorio importacaoRepositorio = new ImportacaoRepositorio();
+            importacao.setStatus("Recebido");
 
+            boolean alterou = importacaoRepositorio.Alterar(importacao);
+            if (alterou) {
+                JOptionPane.showMessageDialog(null, "Recebimento salvo com sucesso!");
+                Limpar();
+            }
         }
 
     }//GEN-LAST:event_btRegistrarActionPerformed

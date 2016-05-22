@@ -16,6 +16,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import jdk.nashorn.internal.ir.BreakNode;
 
 /**
  *
@@ -56,37 +58,32 @@ public class ImportacaoRepositorio implements IRepositorio<Importacao> {
         repMov.Salvar(movEstoque);
     }
 
-    public void Alterar(Importacao item) {
-        String sql = "UPDATE Importacao SET Status= '" + item.getStatus() + "' where CodBarras=" + item.getCodigoBarras();
-        System.out.println("Query " + sql);
-        pers.ExecutaComando(sql);
+    public boolean Alterar(Importacao item) {
+       
+        if (item.getStatus().equalsIgnoreCase("Enviado")) {
+            String sql = "UPDATE Importacao SET Status= '" + item.getStatus() + "' where CodBarras=" + item.getCodigoBarras();
+            System.out.println("Query " + sql);
+            pers.ExecutaComando(sql);
 
-        MovimentoEstoque movimentoEstoque = new MovimentoEstoque();
-        movimentoEstoque.setData(Util.sdf.format(new Date()));
-        movimentoEstoque.setTipoMovimentacao("ENTRADA");
-        movimentoEstoque.setPais("BR");
-        
-        Estoque estoque = new Estoque();
-        estoque.setProduto(item.getProduto());
-        
-        movimentoEstoque.setEstoque(estoque);
-//        movimentoEstoque.setImportacao(item.getIdImportacao());
-/*
-        EstoqueRepositorio estoqueRepositorio = new EstoqueRepositorio();
-        Estoque estoque = new Estoque();
-        estoque.setPais("BR");
-        estoque.setProduto(item.getProduto());
-        estoque.setQuantidade(item.getQuantidade());
+            MovimentoEstoque movimentoEstoque = new MovimentoEstoque();
+            movimentoEstoque.setData(Util.sdf.format(new Date()));
+            movimentoEstoque.setTipoMovimentacao("ENTRADA");
+            movimentoEstoque.setPais("BR");
 
-        estoqueRepositorio.Salvar(estoque);
+            Estoque estoque = new Estoque();
+            estoque.setProduto(item.getProduto());
 
-        estoque = estoqueRepositorio.CarregarEstoquePorProduto(item.getProduto().getIdProduto(), "BR");
+            movimentoEstoque.setEstoque(estoque);
+            movimentoEstoque.setQuantidade(item.getQuantidade());
 
-        movimentoEstoque.setEstoque(estoque);
-*/
-        MovimentoEstoqueRepositorio movimentoEstoqueRepositorio = new MovimentoEstoqueRepositorio();
-        movimentoEstoqueRepositorio.Salvar(movimentoEstoque);
-        
+            MovimentoEstoqueRepositorio movimentoEstoqueRepositorio = new MovimentoEstoqueRepositorio();
+            movimentoEstoqueRepositorio.Salvar(movimentoEstoque);
+            return true;
+        }else{
+            JOptionPane.showMessageDialog(null, "Código de barras já foi recebido!");
+            return false;
+        }
+
     }
 
     @Override
