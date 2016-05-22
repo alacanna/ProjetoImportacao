@@ -224,7 +224,7 @@ public class FrmRegistrarMovimentacao extends javax.swing.JInternalFrame {
             Produto p = (Produto) cmbProduto.getSelectedItem();
             
             EstoqueRepositorio rep = new EstoqueRepositorio();
-            Estoque estoque = rep.CarregarEstoquePorProduto(p.getIdProduto());
+            Estoque estoque = rep.CarregarEstoquePorProduto(p.getIdProduto(), "CHL");
             
             if(estoque == null)
             {
@@ -284,7 +284,7 @@ public class FrmRegistrarMovimentacao extends javax.swing.JInternalFrame {
                 Produto produto = (Produto) cmbProduto.getSelectedItem();
 
                 EstoqueRepositorio repEstoque = new EstoqueRepositorio();
-                Estoque estoque = repEstoque.CarregarEstoquePorProduto(produto.getIdProduto());
+                Estoque estoque = repEstoque.CarregarEstoquePorProduto(produto.getIdProduto(),"CHL");
 
                 if (estoque != null) {
                     txtEstoqueAtual.setText("Estoque atual: " + String.valueOf(estoque.getQuantidade()));
