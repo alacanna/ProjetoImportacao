@@ -32,7 +32,6 @@ public class FrmRegistrarMovimentacao extends javax.swing.JInternalFrame {
     
     public void CarregarTela()
     {
-        cmbProduto = null;
         preencheView();
         Util.carregarProduto(cmbProduto, new ProdutoRepositorio());
     }
