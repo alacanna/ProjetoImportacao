@@ -15,12 +15,13 @@ import javax.swing.JOptionPane;
  */
 public class FrmRegistrarRecebimento extends javax.swing.JInternalFrame {
 
+    private Importacao importacao;
     /**
      * Creates new form FrmRegistrarRecebimento
      */
-    public FrmRegistrarRecebimento() 
-    {
+    public FrmRegistrarRecebimento() {
         initComponents();
+        desabilitarCampos();
     }
 
     /**
@@ -57,6 +58,7 @@ public class FrmRegistrarRecebimento extends javax.swing.JInternalFrame {
 
         PProduto.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
+        txtQte.setEditable(false);
         txtQte.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtQteActionPerformed(evt);
@@ -75,6 +77,8 @@ public class FrmRegistrarRecebimento extends javax.swing.JInternalFrame {
 
         lblProduto.setText("Produto:");
 
+        txtProduto.setEditable(false);
+
         btnPesquisar.setText("Pesquisar");
         btnPesquisar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -84,6 +88,7 @@ public class FrmRegistrarRecebimento extends javax.swing.JInternalFrame {
 
         lblDtEnvio.setText("Data de Envio:");
 
+        txtDtEnvio.setEditable(false);
         txtDtEnvio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtDtEnvioActionPerformed(evt);
@@ -158,6 +163,11 @@ public class FrmRegistrarRecebimento extends javax.swing.JInternalFrame {
         });
 
         btRegistrar.setText("Registrar");
+        btRegistrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btRegistrarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -201,8 +211,7 @@ public class FrmRegistrarRecebimento extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtCodBarrasActionPerformed
 
     private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
-        txtQte.setText("");
-        txtCodBarras.setText("");
+        Limpar();
     }//GEN-LAST:event_btnLimparActionPerformed
 
     private void txtDtEnvioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDtEnvioActionPerformed
@@ -210,19 +219,40 @@ public class FrmRegistrarRecebimento extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtDtEnvioActionPerformed
 
     private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
-       int codBarras = Integer.parseInt(txtCodBarras.getText());
-     
-       ImportacaoRepositorio rep = new ImportacaoRepositorio();
-       Importacao importacao = rep.CarregarPeloCodigoDeBarras(codBarras);
-       
-       if(importacao != null){
-           txtDtEnvio.setText(String.valueOf(importacao.getDataEnvio()));
-           txtProduto.setText(String.valueOf(importacao.getProduto().getNome()));
-           txtQte.setText(String.valueOf(importacao.getQuantidade()));
-       }else{
-            JOptionPane.showMessageDialog(null, "Não existe importação com esse código!");
-       }
+
+        if (!"".equals(txtCodBarras.getText())) {
+            int codBarras = Integer.parseInt(txtCodBarras.getText());
+
+            ImportacaoRepositorio rep = new ImportacaoRepositorio();
+            importacao = rep.CarregarPeloCodigoDeBarras(codBarras);
+
+            if (importacao != null) {
+                txtDtEnvio.setText(String.valueOf(importacao.getDataEnvio()));
+                txtProduto.setText(String.valueOf(importacao.getProduto().getNome()));
+                txtQte.setText(String.valueOf(importacao.getQuantidade()));
+            } else {
+                JOptionPane.showMessageDialog(null, "Não existe importação com esse código!");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Digite um código de barras para realizar a pesquisa");
+            Limpar();
+        }
     }//GEN-LAST:event_btnPesquisarActionPerformed
+
+    private void btRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRegistrarActionPerformed
+        String menssagem = "Deseja realmente registrar o recebimento?";
+        String titulo = "Atenção";
+        int reply = JOptionPane.showConfirmDialog(null, menssagem, titulo, JOptionPane.YES_NO_OPTION);
+        if (reply == JOptionPane.YES_OPTION) {
+             ImportacaoRepositorio importacaoRepositorio = new ImportacaoRepositorio();
+             importacao.setStatus("Recebido");
+            
+             importacaoRepositorio.Salvar(importacao);
+             JOptionPane.showMessageDialog(null, "Recebimento salvo com sucesso!");
+
+        }
+
+    }//GEN-LAST:event_btRegistrarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -240,4 +270,17 @@ public class FrmRegistrarRecebimento extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtProduto;
     private javax.swing.JTextField txtQte;
     // End of variables declaration//GEN-END:variables
+
+    private void Limpar() {
+        txtDtEnvio.setText("");
+        txtProduto.setText("");
+        txtQte.setText("");
+        txtCodBarras.setText("");
+    }
+
+    private void desabilitarCampos() {
+        txtDtEnvio.setEnabled(false);
+        txtProduto.setEnabled(false);
+        txtQte.setEnabled(false);
+    }
 }
