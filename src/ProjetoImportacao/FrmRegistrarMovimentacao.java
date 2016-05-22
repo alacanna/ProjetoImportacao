@@ -11,6 +11,8 @@ import ProjetoImportacao.Model.Repositorio.EstoqueRepositorio;
 import ProjetoImportacao.Model.Repositorio.ProdutoRepositorio;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import javax.swing.JOptionPane;
 
 /**
@@ -252,22 +254,22 @@ public class FrmRegistrarMovimentacao extends javax.swing.JInternalFrame {
     }
 
     private void preencheView() {
-        cmbProduto.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("IdProduto "+ ((Produto)cmbProduto.getSelectedItem()).getIdProduto());
-                System.out.println("Estoque "+ new EstoqueRepositorio().Listar(null).toString());
 
-                
+        cmbProduto.addItemListener((ItemEvent e) -> {
+            if (e.getStateChange() == ItemEvent.SELECTED) {
+                Produto produto = (Produto) cmbProduto.getSelectedItem();
+
                 EstoqueRepositorio repEstoque = new EstoqueRepositorio();
-                Estoque estoque = repEstoque.CarregarEstoquePorProduto(((Produto) cmbProduto.getSelectedItem()).getIdProduto());
+                Estoque estoque = repEstoque.CarregarEstoquePorProduto(produto.getIdProduto());
 
                 if (estoque != null) {
                     txtEstoqueAtual.setText("Estoque atual: " + String.valueOf(estoque.getQuantidade()));
+                }else{
+                    txtEstoqueAtual.setText("Estoque atual: " + String.valueOf(0));                    
                 }
-
             }
         });
+
     }
 
 }
