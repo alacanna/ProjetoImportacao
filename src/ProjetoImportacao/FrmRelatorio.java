@@ -5,8 +5,8 @@
  */
 package ProjetoImportacao;
 
-import ProjetoImportacao.Model.MovimentoEstoque;
-import ProjetoImportacao.Model.Repositorio.MovimentoEstoqueRepositorio;
+import ProjetoImportacao.Model.Estoque;
+import ProjetoImportacao.Model.Repositorio.EstoqueRepositorio;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.swing.table.DefaultTableModel;
@@ -57,11 +57,11 @@ public class FrmRelatorio extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Tipo Movimentação", "Produto", "Qte", "Data"
+                "Produto", "Qte"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -72,8 +72,6 @@ public class FrmRelatorio extends javax.swing.JInternalFrame {
         if (jTable1.getColumnModel().getColumnCount() > 0) {
             jTable1.getColumnModel().getColumn(0).setResizable(false);
             jTable1.getColumnModel().getColumn(1).setResizable(false);
-            jTable1.getColumnModel().getColumn(2).setResizable(false);
-            jTable1.getColumnModel().getColumn(3).setResizable(false);
         }
 
         Estoque.addTab("BR", BR);
@@ -83,11 +81,11 @@ public class FrmRelatorio extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Tipo Movimentação", "Produto", "Qte", "Data"
+                "Produto", "Qte"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -98,8 +96,6 @@ public class FrmRelatorio extends javax.swing.JInternalFrame {
         if (Relatorio.getColumnModel().getColumnCount() > 0) {
             Relatorio.getColumnModel().getColumn(0).setResizable(false);
             Relatorio.getColumnModel().getColumn(1).setResizable(false);
-            Relatorio.getColumnModel().getColumn(2).setResizable(false);
-            Relatorio.getColumnModel().getColumn(3).setResizable(false);
         }
 
         Estoque.addTab("CHL", CHL);
@@ -154,34 +150,30 @@ public class FrmRelatorio extends javax.swing.JInternalFrame {
 
     private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
             // TODO add your handling code here:
-        MovimentoEstoqueRepositorio rep = new MovimentoEstoqueRepositorio();
-        List<MovimentoEstoque> movimentos = rep.Listar(null);
+        EstoqueRepositorio rep = new EstoqueRepositorio();
+        List<Estoque> movimentos = rep.Listar(null);
         
-        List<MovimentoEstoque> movimentosBr = movimentos.stream().filter(p -> "Brasil".toUpperCase().equals(p.getPais().toUpperCase()) ).collect(Collectors.toList());
+        List<Estoque> movimentosBr = movimentos.stream().filter(p -> "br".toUpperCase().equals(p.getPais().toUpperCase()) ).collect(Collectors.toList());
         
-        List<MovimentoEstoque> movimentosCh = movimentos.stream().filter(p -> "Chile".toUpperCase().equals(p.getPais().toUpperCase()) ).collect(Collectors.toList());
+        List<Estoque> movimentosCh = movimentos.stream().filter(p -> "chl".toUpperCase().equals(p.getPais().toUpperCase()) ).collect(Collectors.toList());
         
-        DefaultTableModel userTableModel = new DefaultTableModel( new Object[]{ "Tipo Movimentação", "Produto", "Qte", "Data" }, 0 );
+        DefaultTableModel userTableModel = new DefaultTableModel( new Object[]{ "Produto", "Qte" }, 0 );
         
-        for (MovimentoEstoque m : movimentosBr) {
-            Object[] o = new Object[4];
-            o[0] = m.getTipoMovimentacao();
-            o[1] = m.getEstoque().getProduto().getNome();
-            o[2] = m.getQuantidade();
-            o[3] = m.getData();
+        for (Estoque m : movimentosBr) {
+            Object[] o = new Object[2];
+            o[0] = m.getProduto().getNome();
+            o[1] = m.getQuantidade();
             
             userTableModel.addRow(o);
           }
         jTable1.setModel(userTableModel);
         
-        userTableModel = new DefaultTableModel( new Object[]{ "Tipo Movimentação", "Produto", "Qte", "Data" }, 0 );
+        userTableModel = new DefaultTableModel( new Object[]{ "Produto", "Qte" }, 0 );
         
-        for (MovimentoEstoque m : movimentosCh) {
-            Object[] o = new Object[4];
-            o[0] = m.getTipoMovimentacao();
-            o[1] = m.getEstoque().getProduto().getNome();
-            o[2] = m.getQuantidade();
-            o[3] = m.getData();
+        for (Estoque m : movimentosCh) {
+            Object[] o = new Object[2];
+            o[0] = m.getProduto().getNome();
+            o[1] = m.getQuantidade();
             
             userTableModel.addRow(o);
           }
