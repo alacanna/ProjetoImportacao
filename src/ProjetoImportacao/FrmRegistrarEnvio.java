@@ -4,12 +4,11 @@
  * and open the template in the editor.
  */
 package ProjetoImportacao;
-
-import ProjetoImportacao.Model.DisplayValueModel;
 import ProjetoImportacao.Model.Produto;
 import ProjetoImportacao.Model.Repositorio.ProdutoRepositorio;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  *
@@ -23,19 +22,38 @@ public class FrmRegistrarEnvio extends javax.swing.JInternalFrame {
     public FrmRegistrarEnvio() {
         initComponents();
         CarregarProduto();
+        GerarCodigoBarras();
     }
 
-    public void CarregarProduto()
-    {
-       ProdutoRepositorio rep = new ProdutoRepositorio();
-       
-        List<Produto> produtos =  rep.Listar(null);
-        
+    public void GerarCodigoBarras() {
+        // Determia as numeros que poderão estar no codigo de barras  
+        String numeros = "1234567890";
+
+        Random random = new Random();
+
+        String armazenaChaves = "";
+
+        int index = -1;
+
+        for (int i = 0; i < 9; i++) {
+            index = random.nextInt(numeros.length());
+            armazenaChaves += numeros.substring(index, index + 1);
+        }
+
+        txtCodBarras.setText(armazenaChaves);
+        txtCodBarras.setEnabled(false);
+    }
+
+    public void CarregarProduto() {
+        ProdutoRepositorio rep = new ProdutoRepositorio();
+
+        List<Produto> produtos = rep.Listar(null);
+
         produtos.stream().forEach((p) -> {
             cmbProduto.addItem(p);
         });
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
