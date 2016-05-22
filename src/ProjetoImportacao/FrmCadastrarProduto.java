@@ -178,8 +178,7 @@ public class FrmCadastrarProduto extends javax.swing.JInternalFrame {
        
         Produto produto = new Produto();
         
-        produto.setCategoria((String)cmbCategoria.getSelectedItem());
-        produto.setCodigoBarras("");
+        produto.setCategoria((String)cmbCategoria.getSelectedItem());        
         produto.setNome(txtNome.getText());
         produto.setPreco(Double.parseDouble(txtPreco.getText()));
         produto.setUniMedida((String)cmbUniMedida.getSelectedItem());
