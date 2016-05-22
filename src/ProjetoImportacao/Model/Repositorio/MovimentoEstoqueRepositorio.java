@@ -18,6 +18,7 @@ import java.util.logging.Logger;
 /**
  *
  * @author VanessaCristine
+ * Classe que realiza a persistencia da classe MovimentacaoEstoque
  */
 public class MovimentoEstoqueRepositorio implements IRepositorio<MovimentoEstoque>{
 

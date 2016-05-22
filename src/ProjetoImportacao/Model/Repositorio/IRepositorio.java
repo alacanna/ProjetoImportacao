@@ -11,14 +11,19 @@ import java.util.List;
  *
  * @author VanessaCristine
  * @param <T>
+ * Interface para a persistencia dos metodos comum da base de dados.
  */
 public interface IRepositorio<T> {
     
+    //Metodo salvar
     public void Salvar(T item);
     
+    //Metodo para listar 
     public List<T> Listar(String[] params);
     
+    //Metodo para Carregar
     public T Carregar(int codigo);
     
+    //Metodo para remover
     public void Remover(T item);
 }

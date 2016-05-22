@@ -16,6 +16,7 @@ import java.util.logging.Logger;
 /**
  *
  * @author VanessaCristine
+ * Classe que realiza a persistencia da classe Produto
  */
 public class ProdutoRepositorio implements IRepositorio<Produto> {
 

@@ -17,11 +17,12 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import jdk.nashorn.internal.ir.BreakNode;
 
 /**
  *
  * @author VanessaCristine
+ * Classe que realiza a persistencia da classe Importacao
+ * 
  */
 public class ImportacaoRepositorio implements IRepositorio<Importacao> {
 

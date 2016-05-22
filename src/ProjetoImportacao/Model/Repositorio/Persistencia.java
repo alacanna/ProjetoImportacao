@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 /**
  *
  * @author VanessaCristine
+ * Classe para conexao com o banco de dados.
  */
 public class Persistencia {
 
@@ -18,19 +19,12 @@ private static Statement stm;
     
 private static Connection _conexao; 
 
+//Metodo que retorna a conexao com o bd access
 private void GetConexao() 
 {
+    //valida se conexao ja existe
     if(_conexao == null)
     {
-    /*try
-    {
-        Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");  
-    }
-    catch (ClassNotFoundException e)
-    {
-        JOptionPane.showMessageDialog(null, "Impossível carregar o Driver 'sun.jdbc.odbc.JdbcOdbcDriver'");
-        System.exit(0);
-    }*/
      try
     {
       String stringCnn = "jdbc:ucanaccess://ControlaEstoque.accdb";
@@ -39,12 +33,13 @@ private void GetConexao()
   }
     catch (SQLException sqle)
     {
-        JOptionPane.showMessageDialog(null, "Problema ao conectar, o caminho do banco deve ser C:\\DB\\ControlaEstoque.accdb");
+        JOptionPane.showMessageDialog(null, "Problema ao conectar, o  banco deve estar na raiz da pasta do executavel, se estiver tente novamente.");
         System.exit(0);
     }
     }
  } 
  
+//Fecha a conexao com a base de dados
 private void Desconectar()
 {
     try
@@ -59,7 +54,8 @@ private void Desconectar()
     }
 }
 
-public void ExecutaComando(String sqlString)
+//Metodo para execucao das intrucoes SQL "INSERT" e "UPDATE"
+ public void ExecutaComando(String sqlString)
 {
     try
     {   GetConexao();
@@ -70,11 +66,12 @@ public void ExecutaComando(String sqlString)
         JOptionPane.showMessageDialog(null, "Erro ao executar comando");
         System.exit(0);
     }
-    finally 
+    finally // para garantir o fechamento da conexao
     {
         Desconectar(); 
     }
 }
+ //Metodo para execucao das intrucoes SQL "SELECT", retornando um result set.
 public ResultSet ExecutaLista(String sqlString)
 {
     try
@@ -87,7 +84,7 @@ public ResultSet ExecutaLista(String sqlString)
         System.exit(0);
         return null;
     }
-    finally
+    finally // garantir o fechamento da conexao
     {
         Desconectar();
     }
